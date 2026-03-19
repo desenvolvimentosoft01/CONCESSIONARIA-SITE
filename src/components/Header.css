@@ -1,0 +1,256 @@
+/* Header.css */
+.header-fixo {
+  background-color: #1a1a1a;
+  color: white;
+  border-bottom: 3px solid #ff6b00;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  min-height: 130px;
+  padding-bottom: 0;
+}
+
+.headerContent {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logoArea {
+  flex: 1;
+}
+
+.logo {
+  font-size: 24px;
+  margin: 0;
+  color: white;
+}
+
+.slogan {
+  font-size: 12px;
+  margin: 5px 0 0;
+  color: #ccc;
+}
+
+.menuButton {
+  display: none; /* Escondido no Desktop */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 1001;
+  flex-direction: column;
+  gap: 5px; /* Espaçamento entre as linhas */
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.hamburgerLine {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 4px 0;
+  transition: all 0.3s;
+}
+
+.closeIcon {
+  font-size: 28px;
+  color: white;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.menuDesktop {
+  display: flex;
+  gap: 30px;
+}
+
+.menuLink {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.menuLink:hover {
+  border-bottom-color: #ff6b00;
+}
+
+.menuLinkAtivo {
+  border-bottom: 2px solid #ff6b00;
+}
+
+.menuLinkAdmin {
+  background-color: #ff6b00;
+  padding: 8px 15px !important;
+  border-radius: 5px;
+  border-bottom: none !important;
+}
+
+.menuLinkAdmin:hover {
+  background-color: #e55f00;
+  border-bottom: none !important;
+}
+
+.menuMobile {
+  display: none;
+}
+
+.menuMobileLink {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s;
+  padding: 12px 0;
+  width: 100%;
+  border-bottom: 2px solid transparent;
+}
+
+.menuMobileLink:hover {
+  color: #ff6b00;
+}
+
+/* Barra inferior com endereço e redes sociais */
+.topBar {
+  background-color: #333;
+  padding: 8px 0;
+  border-top: 1px solid #444;
+  width: 100%;
+}
+
+.topBarContent {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.endereco {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #ccc;
+}
+
+.enderecoIcon {
+  font-size: 14px;
+  color: #ff6b00;
+}
+
+.redesSociais {
+  display: flex;
+  gap: 12px;
+}
+
+.redeSocial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  color: #ccc;
+}
+
+.redeSocial:hover {
+  transform: translateY(-2px);
+  color: white;
+}
+
+.whatsapp:hover {
+  background-color: #25d366;
+}
+
+.instagram:hover {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.facebook:hover {
+  background-color: #1877f2;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .topBar {
+    padding: 10px 0;
+  }
+  
+  .topBarContent {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .endereco {
+    font-size: 12px;
+  }
+  
+  .enderecoTexto {
+    display: block;
+  }
+  
+  .headerContent {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .logoArea {
+    text-align: left;
+  }
+  
+  .menuDesktop {
+    display: none;
+  }
+  
+  .menuButton {
+    display: block;
+  }
+  
+  .menuMobile {
+    position: fixed;
+    top: 64px;
+    right: 10px;
+    width: 220px;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    border-radius: 0 0 12px 12px;
+  }
+}

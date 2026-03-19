@@ -1,0 +1,163 @@
+/* detalhe.css */
+.detalhe-page {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  padding-top: 125px;
+}
+
+.detalhe-conteudo {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.detalhe-botaoVoltar {
+  display: inline-block;
+  color: #666;
+  text-decoration: none;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  transition: color 0.3s;
+}
+
+.detalhe-botaoVoltar:hover {
+  color: #ff6b00;
+}
+
+.detalheContainer {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding: 30px;
+}
+
+.galeriaContainer {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.infoContainer {
+  padding: 20px;
+}
+
+.tituloDetalhe {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.anoDetalhe {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.precoDetalhe {
+  font-size: 36px;
+  font-weight: bold;
+  color: #2e7d32;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.descricao {
+  margin-bottom: 30px;
+}
+
+.descricaoTitulo {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.descricaoTexto {
+  color: #666;
+  line-height: 1.6;
+}
+
+.caracteristicas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.caracteristicaItem {
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.caracteristicaLabel {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.caracteristicaValor {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.detalhe-botaoWhatsApp {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #25d366;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.detalhe-botaoWhatsApp:hover {
+  background-color: #20b859;
+}
+
+@media (max-width: 768px) {
+  .detalheContainer {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .caracteristicas {
+    grid-template-columns: 1fr;
+  }
+  
+  .tituloDetalhe {
+    font-size: 28px;
+  }
+  
+  .precoDetalhe {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tituloDetalhe {
+    font-size: 24px;
+  }
+  
+  .precoDetalhe {
+    font-size: 24px;
+  }
+  
+  .detalhe-botaoWhatsApp {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

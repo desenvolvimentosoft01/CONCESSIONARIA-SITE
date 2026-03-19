@@ -1,0 +1,161 @@
+/* empresa.css */
+.empresa-container {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  padding-top: 125px;
+}
+
+.empresa-banner {
+  background-color: #333;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.empresa-banner-titulo {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.empresa-banner-texto {
+  font-size: 18px;
+  color: #ccc;
+}
+
+.empresa-main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.empresa-sobre-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.empresa-titulo {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.empresa-paragrafo {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.empresa-numeros {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.empresa-numero-item {
+  text-align: center;
+}
+
+.empresa-numero-valor {
+  display: block;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff6b00;
+}
+
+.empresa-numero-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.empresa-sobre-imagem {
+  background-color: #f0f0f0;
+  height: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .sobreContainer {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+    padding: 0 !important;
+  }
+  
+  .titulo {
+    font-size: 24px !important;
+  }
+  
+  .paragrafo {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+  
+  .numeros {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  
+  .numeroItem {
+    padding: 15px !important;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .numeroValor {
+    font-size: 32px !important;
+  }
+  
+  .numeroLabel {
+    font-size: 13px !important;
+  }
+  
+  .sobreImagem {
+    height: 250px !important;
+  }
+  
+  .bannerTitulo {
+    font-size: 28px !important;
+  }
+  
+  .bannerTexto {
+    font-size: 16px !important;
+  }
+  
+  .main {
+    padding: 30px 15px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .titulo {
+    font-size: 22px !important;
+  }
+  
+  .paragrafo {
+    font-size: 13px !important;
+  }
+  
+  .numeroValor {
+    font-size: 28px !important;
+  }
+  
+  .numeroLabel {
+    font-size: 12px !important;
+  }
+  
+  .sobreImagem {
+    height: 200px !important;
+  }
+  
+  .bannerTitulo {
+    font-size: 24px !important;
+  }
+  
+  .bannerTexto {
+    font-size: 14px !important;
+  }
+}

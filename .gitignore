@@ -1,0 +1,20 @@
+# Dependências
+node_modules/
+
+# Build
+.next/
+out/
+dist/
+
+# Ambiente
+.env
+.env.local
+.env.*.local
+
+# Uploads
+public/uploads/
+public/midia/
+
+# Sistema
+.DS_Store
+Thumbs.db

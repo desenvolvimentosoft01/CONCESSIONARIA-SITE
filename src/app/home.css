@@ -1,0 +1,393 @@
+/* ===== HOME.CSS v2 ===== */
+/* Estilos exclusivos da página Home */
+
+.container {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  padding-top: 130px;
+  min-height: 100vh;
+}
+
+/* CARROSSEL */
+.carrossel {
+  position: relative;
+  height: 430px;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.carrosselItem {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.carrosselImagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carrosselOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.carrosselTitulo {
+  font-size: 36px;
+  margin-bottom: 10px;
+  max-width: 800px;
+}
+
+.carrosselTexto {
+  font-size: 18px;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+.carrosselBotao {
+  padding: 12px 30px;
+  background-color: #ff6b00;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.carrosselIndicadores {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.indicador {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.5);
+  cursor: pointer;
+}
+
+.indicadorAtivo {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ff6b00;
+  cursor: pointer;
+}
+
+/* SEÇÃO SOBRE */
+.sobre {
+  background-color: white;
+  padding: 60px 20px;
+}
+
+.sobreContainer {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.sobreTitulo {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.sobreDescricao {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.sobreBotao {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: #ff6b00;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.sobreImagem {
+  background-color: #f0f0f0;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagemPlaceholder {
+  text-align: center;
+}
+
+.imagemTexto {
+  font-size: 24px;
+  color: #999;
+}
+
+/* SEÇÃO DESTAQUE */
+.destaque {
+  max-width: 1600px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.destaqueTitulo {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.carrosGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(255, 107, 0, 0.15);
+}
+
+.cardImagem {
+  height: 200px;
+  background-color: #f5f5f5;
+  overflow: hidden;
+  position: relative;
+}
+
+.cardImagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .cardImagem img {
+  transform: scale(1.1);
+}
+
+.semImagem {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #ccc;
+}
+
+.cardInfo {
+  padding: 20px;
+}
+
+.cardModelo {
+  font-size: 18px;
+  margin: 0 0 5px 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.cardAno {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 10px 0;
+}
+
+.cardPreco {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff6b00;
+  margin: 0 0 15px 0;
+}
+
+.cardBotoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.botaoDetalhes,
+.botaoWhatsApp {
+  padding: 12px 10px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  border-radius: 5px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: opacity 0.3s ease !important;
+  display: inline-block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.botaoDetalhes:hover,
+.botaoWhatsApp:hover {
+  opacity: 0.85 !important;
+}
+
+.botaoDetalhes {
+  background-color: #333 !important;
+  color: white !important;
+}
+
+.botaoWhatsApp {
+  background-color: #25d366 !important;
+  color: white !important;
+}
+
+/* FOOTER */
+.footer {
+  background-color: #1a1a1a;
+  color: white;
+  padding-top: 40px;
+}
+
+.footerContainer {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.footerTitulo {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #ff6b00;
+}
+
+.footerTexto {
+  font-size: 14px;
+  color: #ccc;
+  margin: 5px 0;
+  line-height: 1.4;
+}
+
+.footerBottom {
+  border-top: 1px solid #333;
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+}
+
+.copyright {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+  .container {
+    padding-top: 125px;
+  }
+  
+  
+  .carrosselTitulo {
+    font-size: 24px;
+  }
+  
+  .carrosselTexto {
+    font-size: 16px;
+  }
+  
+  .sobreContainer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .sobreImagem {
+    height: 200px;
+  }
+  
+  .carrosGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footerContainer {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 0;
+  }
+  
+  .logo {
+    font-size: 20px;
+  }
+  
+  .menuLink {
+    font-size: 12px;
+  }
+  
+  .carrosselTitulo {
+    font-size: 20px;
+  }
+  
+  .carrosselBotao {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+  
+  .sobreTitulo {
+    font-size: 24px;
+  }
+  
+  .sobreDescricao {
+    font-size: 14px;
+  }
+  
+  .destaqueTitulo {
+    font-size: 24px;
+  }
+  
+  .cardPreco {
+    font-size: 18px;
+  }
+  
+  .botaoDetalhes {
+    font-size: 12px;
+  }
+  
+  .botaoWhatsApp {
+    font-size: 12px;
+  }
+}
