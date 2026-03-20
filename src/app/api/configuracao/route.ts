@@ -1,5 +1,5 @@
 import { query } from '@/lib/db';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { registrarAuditoria, getClientInfo } from '@/lib/auditoria';
 
 export async function GET() {
@@ -12,7 +12,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const { chave, valor, descricao, categoria, tipo } = await request.json();
 
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     }
 
     // Registra auditoria
-    const clientInfo = await getClientInfo();
+    const clientInfo = getClientInfo(request);
       await registrarAuditoria({
       usuario: clientInfo.usuario,
       acao: acao as "DELETE" | "CREATE" | "UPDATE", // <-- Adicione este "as ..."
