@@ -47,14 +47,14 @@ export async function POST(request: Request) {
     }
 
     // Registra auditoria
-    const clientInfo = getClientInfo(request);
-    await registrarAuditoria({
+      await registrarAuditoria({
       usuario: clientInfo.usuario,
-      acao: acao,
+      acao: acao as "DELETE" | "CREATE" | "UPDATE", // <-- Adicione este "as ..."
       tabela: 'TAB_CONFIGURACAO',
       dadosAntes: anterior[0] || null,
       dadosDepois: result[0]
     });
+
 
     return NextResponse.json(result[0]);
   } catch (error) {
