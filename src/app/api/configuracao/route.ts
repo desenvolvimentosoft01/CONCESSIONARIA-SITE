@@ -47,6 +47,7 @@ export async function POST(request: Request) {
     }
 
     // Registra auditoria
+    const clientInfo = await getClientInfo();
       await registrarAuditoria({
       usuario: clientInfo.usuario,
       acao: acao as "DELETE" | "CREATE" | "UPDATE", // <-- Adicione este "as ..."
