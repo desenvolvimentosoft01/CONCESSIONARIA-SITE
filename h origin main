@@ -1,0 +1,87 @@
+[33m7b97192[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m fix: ajustando a personalização do site
+[33m8649370[m fix: corrigindo a personalização do site
+[33m20c7066[m feat: filtro por data em auditoria de usuários
+[33mfbc7db7[m fix: correções
+[33mea10781[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m alterações no Menu Mobile
+[33md066ff5[m Fix home header spacing and remove home white gap
+[33m192ada6[m Fix route id type guard for Next.js 16 handler
+[33mb331dab[m Fix Next.js 16 route params type in carro imagens API
+[33m59c3f5f[m Fix car image save + set detail back route + improve delete confirmation modals
+[33m56850ef[m Adiciona animações profissionais em todas as páginas: fade-in ao rolar, hover melhorado nos cards e pulse no WhatsApp
+[33m65723ee[m Adiciona ícones de Instagram e Facebook com links vazios para preenchimento futuro
+[33m6c983ff[m Refatora código: remove duplicações, melhora comentários e padroniza formatação
+[33mda442c3[m Atualiza informações de contato e footer
+[33mab500ff[m Reorganiza header: move barra de redes sociais para baixo e padroniza espaçamento de todas as páginas
+[33me043ad2[m Adiciona barra superior no header com endereço e redes sociais
+[33m9274a33[m Removendo Commit do Sql Referentes as FKs
+[33m6829b33[m Adiciona scripts SQL para verificação e correção de foreign keys
+[33m84f92db[m Adiciona TAB_CONFIGURACAO no filtro de auditoria
+[33m26f3312[m Adiciona componente Toast e substitui alerts por mensagens bonitas
+[33m8026d2c[m Move aviso de atenção para cima na personalização
+[33m2402f56[m Corrige cor padrão de links de azul para laranja
+[33m989a6db[m Muda método de PUT para POST na API de configuração
+[33m03e8713[m Adiciona preview de cor atual vs padrão na personalização
+[33m7705789[m Adiciona logs de debug no salvamento de configurações
+[33m34fb671[m Adiciona sistema de personalização de cores do site
+[33m4749974[m Adiciona visualização de diff nas alterações da auditoria
+[33mbb9a864[m Remove IP e User Agent da auditoria
+[33m3f196a6[m Melhora captura de IP real em produção
+[33m570716c[m Adiciona sistema completo de auditoria
+[33m099bd37[m Configura Cloudinary diretamente nas rotas de upload
+[33m9a1f798[m Integra Cloudinary para upload de imagens e vídeos
+[33m0243be4[m Adiciona toast de notificação e logs detalhados no upload
+[33mb1226f1[m Adiciona logs de debug no upload de mídias
+[33m58a5bd2[m Fix versão Next.js e adiciona package-lock.json
+[33mcba85da[m Adiciona banners gerenciáveis e rotas de mídia
+[33mebbee2d[m Remove Tailwind CSS
+[33mc580a50[m CONCESSIONARIA TESTE
+[33m9c082fd[m trigger new deployment after Next.js update
+[33m578b626[m chore: atualizar next-env.d.ts e remover arquivos desnecessários
+[33m824c07c[m update Next.js to 14.2.0
+[33m628df35[m remove vercel.json desnecessário
+[33mda7b51d[m add vercel config
+[33mf0163a0[m trigger new deployment
+[33m925e46a[m force vercel redeploy
+[33m0edb896[m trigger vercel deployment
+[33md17f026[m fix: corrigir propriedades do iframe do Google Maps para passar no build
+[33m70656b5[m fix: adicionar propriedade cor na interface Carro para corrigir erro de build
+[33me3ee762[m fix: renomear classe botaoWhatsApp para detalhe-botaoWhatsApp na pagina de detalhes para evitar conflitos
+[33me50ef2e[m fix: ajustar banner da pagina empresa para ficar consistente com outras paginas
+[33m5b54488[m fix: adicionar StyleReset e padding-top na pagina de estoque para consistencia
+[33m055345a[m fix: adicionar StyleReset e ajustar estilos da pagina home para evitar bugs ao navegar
+[33mf49520b[m fix: renomear classe container para entrar-container na pagina de login para evitar conflito com home
+[33m503327f[m fix: adicionar estilos globais e componente StyleReset para evitar conflitos de CSS
+[33m62862ba[m feat: adicionar suporte para upload e exibicao de videos nas midias dos carros
+[33maa62540[m feat: adicionar campo placa com máscara e filtro de busca
+[33meb5d52d[m feat: adicionar botão flutuante de WhatsApp em todo o site
+[33meceb06c[m feat: adicionar botões de área administrativa e editar anúncio
+[33m804d5c6[m feat: adicionar campo cor nos carros com filtro
+[33m4406b2d[m style: centralizar e aumentar painel administrativo
+[33mf22c767[m feat: adicionar botão voltar no painel de mídia
+[33mcdbb1a6[m feat: adicionar filtros de busca no painel administrativo de carros
+[33m3935fcb[m feat: adicionar máscara de preço nos formulários de carro
+[33meb50d9e[m fix: corrigir tamanho dos botões Ver detalhes e WhatsApp
+[33m1948605[m refactor: remove styles inline da página empresa e usa classes CSS
+[33m0fa5837[m refactor: separa CSS inline para arquivos externos (admin carros, detalhes carro, globals)
+[33m525e68f[m fix: deletando a pasta teste
+[33m79007a1[m fix: remove className dos objetos styles que causava erro de build
+[33m3aa8085[m feat: adiciona Google Maps na página de contato com localização da loja
+[33m7f99282[m fix: ajusta padding e espaçamento mobile para home e footer
+[33m4f94924[m feat: melhora responsividade da página empresa com layout mobile otimizado
+[33mb62e0af[m refactor: remove estilos duplicados de header e padroniza menu em todas páginas
+[33m36c962b[m feat: implementa menu mobile funcional com hamburger e overlay lateral
+[33m69f8102[m feat: ajusta resolução para monitores grandes (1600px) e melhora layout do dashboard
+[33medcd961[m refactor: aplica componente Footer nas páginas contato e serviços
+[33m54900bf[m feat: cria componente Footer reutilizável
+[33m97f5393[m Ajustando o Footer
+[33m32278b2[m Ajustando o Dashboard
+[33m3d40172[m fix: torna páginas dinâmicas para evitar erro de build
+[33m828212d[m fix: adiciona propriedade sobreTexto em empresa/page.tsx
+[33m399930b[m fix: remove arquivo page.tsx incorreto
+[33m08453b0[m chore: trigger rebuild
+[33m7e1a268[m fix: ajusta import Carrossel para maiúsculo
+[33m59bd7ac[m fix: corrige import do componente Carrossel
+[33m0cb566e[m Adicionando página de teste
+[33m7a5f33b[m Rename carrossel.tsx to Carrossel.tsx
+[33m2efb6e3[m Corrigingo conflito de rota e importação do Carrossel
+[33m340b0e3[m Primeiro commit - Site Concessionária
