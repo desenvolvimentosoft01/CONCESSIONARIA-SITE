@@ -157,7 +157,7 @@ const styles = {
     fontSize: '18px',
     color: '#333',
     marginBottom: '15px',
-    borderBottom: '2px solid #ff6b00',
+    borderBottom: '2px solid #c5a059',
     paddingBottom: '10px'
   },
   uploadArea: {

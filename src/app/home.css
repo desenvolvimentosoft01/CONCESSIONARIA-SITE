@@ -3,8 +3,8 @@
 
 .container {
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  padding-top: 130px;
+  background-color: #fcfcfc;
+  padding-top: 0;
   min-height: 100vh;
 }
 
@@ -313,7 +313,7 @@
 /* MEDIA QUERIES */
 @media (max-width: 768px) {
   .container {
-    padding-top: 125px;
+    padding-top: 0;
   }
   
   

@@ -1,88 +1,57 @@
-import Link from 'next/link';
+import { query } from '@/lib/db';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FadeIn from '@/components/FadeIn';
-import { query } from '@/lib/db';
 import './servicos.css';
-import '../../components/FadeIn.css';
 
 export const dynamic = 'force-dynamic';
 
 export default async function ServicosPage() {
   const bannerServicos = await query(`SELECT url FROM TAB_MIDIA WHERE secao = 'banner-servicos' ORDER BY ordem LIMIT 1`);
+
+  const servicos = [
+    { icone: '🚗', titulo: 'Venda de Veículos', desc: 'Estoque selecionado com as melhores marcas e modelos do mercado.' },
+    { icone: '💰', titulo: 'Financiamento', desc: 'Parceria com os principais bancos para as melhores taxas de crédito.' },
+    { icone: '📋', titulo: 'Avaliação de Veículos', desc: 'Avaliação justa e transparente do seu usado na troca.' },
+    { icone: '🤝', titulo: 'Consórcio', desc: 'Planeje a compra do seu carro com parcelas que cabem no seu bolso.' },
+    { icone: '🔍', titulo: 'Revisão Pré-Venda', desc: 'Todos os nossos veículos passam por rigorosa inspeção técnica.' },
+    { icone: '📄', titulo: 'Documentação', desc: 'Assessoria completa para transferência e regularização do seu veículo.' },
+  ];
+
   return (
-    <div className="container">
+    <div style={{ backgroundColor: '#0f0f0f', minHeight: '100vh' }}>
       <Header />
-
-      <div className="banner" style={bannerServicos[0] ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${bannerServicos[0].url})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
-        <h1 className="bannerTitulo">Nossos Serviços</h1>
-        <p className="bannerTexto">Soluções completas para você e seu veículo</p>
-      </div>
-
-      <div className="main">
-        <div className="servicosGrid">
-          <FadeIn delay={0}>
-            <div className="servicoCard">
-              <div className="servicoIcone">💰</div>
-              <h2 className="servicoTitulo">Financiamento</h2>
-              <p className="servicoDescricao">
-                As melhores taxas do mercado, parcelas que cabem no seu bolso 
-                e aprovação rápida.
-              </p>
-              <ul className="servicoLista">
-                <li className="servicoItem">✓ Taxas a partir de 0,99% ao mês</li>
-                <li className="servicoItem">✓ Aprovação em até 24h</li>
-                <li className="servicoItem">✓ Parcelamento em até 60x</li>
-              </ul>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={100}>
-            <div className="servicoCard">
-              <div className="servicoIcone">🔧</div>
-              <h2 className="servicoTitulo">Oficina</h2>
-              <p className="servicoDescricao">
-                Oficina completa com profissionais especializados e equipamentos 
-                de última geração.
-              </p>
-              <ul className="servicoLista">
-                <li className="servicoItem">✓ Revisão programada</li>
-                <li className="servicoItem">✓ Mecânica em geral</li>
-                <li className="servicoItem">✓ Funilaria e pintura</li>
-              </ul>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={200}>
-            <div className="servicoCard">
-              <div className="servicoIcone">📋</div>
-              <h2 className="servicoTitulo">Consultoria</h2>
-              <p className="servicoDescricao">
-                Ajudamos você a escolher o carro ideal para seu perfil e 
-                necessidade. Avaliamos seu veículo usado.
-              </p>
-              <ul className="servicoLista">
-                <li className="servicoItem">✓ Avaliação de veículos</li>
-                <li className="servicoItem">✓ Consultoria personalizada</li>
-                <li className="servicoItem">✓ Negociação facilitada</li>
-              </ul>
-            </div>
-          </FadeIn>
-        </div>
-
-        <FadeIn delay={300}>
-          <div className="cta">
-            <h2 className="ctaTitulo">Fale com um consultor</h2>
-            <p className="ctaTexto">
-              Nossa equipe está preparada para atender você da melhor forma.
-            </p>
-            <div className="ctaBotoes">
-              <a href="https://wa.me/5518996692266" target="_blank" className="ctaBotaoWhatsApp">WhatsApp</a>
-              <Link href="/contato" className="ctaBotaoContato">Formulário</Link>
-            </div>
-          </div>
+      
+      <div style={{ 
+        padding: '160px 20px 80px', 
+        background: bannerServicos[0] 
+          ? `linear-gradient(180deg, rgba(26,26,26,0.9) 0%, rgba(51,51,51,0.8) 100%), url(${bannerServicos[0].url})` 
+          : 'linear-gradient(180deg, #1a1a1a 0%, #333 100%)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        textAlign: 'center',
+        color: '#fff'
+      }}>
+        <FadeIn>
+          <span style={{ display: 'block', color: '#c5a059', fontWeight: 'bold', letterSpacing: '4px', fontSize: '13px', marginBottom: '15px', textTransform: 'uppercase' }}>EXCELÊNCIA EM MOVIMENTO</span>
+          <h1 style={{ fontSize: '48px', fontWeight: '900', margin: '0', fontFamily: 'var(--font-playfair), serif' }}>Nossos Serviços</h1>
+          <p style={{ opacity: 0.7, maxWidth: '600px', margin: '20px auto' }}>Soluções completas para você realizar seu sonho automotivo.</p>
         </FadeIn>
       </div>
+
+      <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '80px 20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '40px' }}>
+          {servicos.map((item, idx) => (
+            <FadeIn key={idx} delay={idx * 100}>
+              <div className="servicoCard" style={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}>
+                <div style={{ fontSize: '48px', marginBottom: '25px' }}>{item.icone}</div>
+                <h3 style={{ fontSize: '22px', fontWeight: '800', marginBottom: '15px', color: '#fff' }}>{item.titulo}</h3>
+                <p style={{ fontSize: '15px', color: '#aaa', lineHeight: '1.8' }}>{item.desc}</p>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </main>
 
       <Footer />
     </div>

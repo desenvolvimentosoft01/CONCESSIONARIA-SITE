@@ -62,7 +62,7 @@ export default function GaleriaSobre({ midias }: GaleriaSobreProps) {
               onClick={() => setIndiceAtual(index)}
               style={{
                 ...styles.indicador,
-                backgroundColor: index === indiceAtual ? '#ff6b00' : '#ddd'
+                backgroundColor: index === indiceAtual ? '#c5a059' : '#ddd'
               }}
             />
           ))}

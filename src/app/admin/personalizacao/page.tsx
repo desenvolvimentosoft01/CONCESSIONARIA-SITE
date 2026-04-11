@@ -79,19 +79,19 @@ export default function PersonalizacaoPage() {
     
     // Lista completa com dados para criar se não existir
     const padraoDefinicoes = [
-      { chave: 'cor_primaria', valor: '#ff6b00', descricao: 'Cor Primária' },
+      { chave: 'cor_primaria', valor: '#c5a059', descricao: 'Cor Primária' },
       { chave: 'cor_secundaria', valor: '#333333', descricao: 'Cor Secundária' },
-      { chave: 'cor_fundo', valor: '#f5f5f5', descricao: 'Cor de Fundo' },
-      { chave: 'cor_header', valor: '#ffffff', descricao: 'Cor do Cabeçalho' },
-      { chave: 'cor_header_texto', valor: '#333333', descricao: 'Texto do Cabeçalho' },
-      { chave: 'cor_footer', valor: '#1a1a1a', descricao: 'Cor do Rodapé' },
+      { chave: 'cor_fundo', valor: '#0f0f0f', descricao: 'Cor de Fundo' },
+      { chave: 'cor_header', valor: '#000000', descricao: 'Cor do Cabeçalho' },
+      { chave: 'cor_header_texto', valor: '#ffffff', descricao: 'Texto do Cabeçalho' },
+      { chave: 'cor_footer', valor: '#000000', descricao: 'Cor do Rodapé' },
       { chave: 'cor_footer_texto', valor: '#ffffff', descricao: 'Texto do Rodapé' },
-      { chave: 'cor_botao_primario', valor: '#ff6b00', descricao: 'Botão Primário' },
+      { chave: 'cor_botao_primario', valor: '#c5a059', descricao: 'Botão Primário' },
       { chave: 'cor_botao_texto', valor: '#ffffff', descricao: 'Texto do Botão' },
       { chave: 'cor_botao_secundario', valor: '#333333', descricao: 'Botão Secundário' },
       { chave: 'cor_whatsapp', valor: '#25d366', descricao: 'Botão WhatsApp' },
-      { chave: 'cor_link', valor: '#ff6b00', descricao: 'Cor de Links' },
-      { chave: 'cor_destaque', valor: '#ff6b00', descricao: 'Cor de Destaque' },
+      { chave: 'cor_link', valor: '#c5a059', descricao: 'Cor de Links' },
+      { chave: 'cor_destaque', valor: '#c5a059', descricao: 'Cor de Destaque' },
       { chave: 'cor_sucesso', valor: '#28a745', descricao: 'Cor de Sucesso' },
       { chave: 'cor_erro', valor: '#dc3545', descricao: 'Cor de Erro' }
     ];
@@ -124,19 +124,19 @@ export default function PersonalizacaoPage() {
 
   function getCorPadrao(chave: string): string {
     const padroes: Record<string, string> = {
-      cor_primaria: '#ff6b00',
+      cor_primaria: '#c5a059',
       cor_secundaria: '#333333',
-      cor_fundo: '#f5f5f5',
-      cor_header: '#ffffff',
-      cor_header_texto: '#333333',
-      cor_footer: '#1a1a1a',
+      cor_fundo: '#0f0f0f',
+      cor_header: '#000000',
+      cor_header_texto: '#ffffff',
+      cor_footer: '#000000',
       cor_footer_texto: '#ffffff',
-      cor_botao_primario: '#ff6b00',
+      cor_botao_primario: '#c5a059',
       cor_botao_texto: '#ffffff',
       cor_botao_secundario: '#333333',
       cor_whatsapp: '#25d366',
-      cor_link: '#ff6b00',
-      cor_destaque: '#ff6b00',
+      cor_link: '#c5a059',
+      cor_destaque: '#c5a059',
       cor_sucesso: '#28a745',
       cor_erro: '#dc3545'
     };
@@ -282,18 +282,21 @@ const styles = {
   container: {
     maxWidth: '1600px',
     margin: '0 auto',
-    padding: '20px',
-    fontFamily: 'Arial, sans-serif'
+    padding: '40px 20px',
+    fontFamily: 'Inter, sans-serif',
+    backgroundColor: '#000000',
+    minHeight: '100vh'
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '20px',
-    backgroundColor: 'white',
+    backgroundColor: '#000000',
     padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    borderRadius: '4px',
+    border: '1px solid #333',
+    boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
   },
   headerLeft: {
     display: 'flex',
@@ -302,7 +305,7 @@ const styles = {
   },
   titulo: {
     fontSize: '24px',
-    color: '#333',
+    color: '#ffffff',
     margin: 0
   },
   botaoVoltar: {
@@ -330,20 +333,23 @@ const styles = {
     color: '#666'
   },
   content: {
-    backgroundColor: 'white',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    backgroundColor: '#1a1a1a',
+    padding: '30px',
+    borderRadius: '4px',
+    border: '1px solid #333',
+    boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
   },
   categoria: {
     marginBottom: '30px'
   },
   categoriaTitulo: {
-    fontSize: '20px',
-    color: '#333',
+    fontSize: '18px',
+    color: '#c5a059',
+    textTransform: 'uppercase' as const,
+    letterSpacing: '2px',
     marginBottom: '15px',
     paddingBottom: '10px',
-    borderBottom: '2px solid #ff6b00'
+    borderBottom: '2px solid #c5a059'
   },
   grid: {
     display: 'grid',
@@ -352,10 +358,10 @@ const styles = {
   },
   card: {
     padding: '15px',
-    border: '1px solid #eee',
-    borderRadius: '8px',
-    backgroundColor: '#fff',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+    border: '1px solid #333',
+    borderRadius: '4px',
+    backgroundColor: '#262626',
+    boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
     transition: 'transform 0.2s',
     display: 'flex',
     flexDirection: 'column' as const,
@@ -368,7 +374,7 @@ const styles = {
     display: 'block',
     fontSize: '15px',
     fontWeight: 'bold' as const,
-    color: '#333'
+    color: '#eee'
   },
   inputGroup: {
     display: 'flex',
@@ -387,11 +393,12 @@ const styles = {
   textInput: {
     flex: 1,
     padding: '10px',
-    border: '1px solid #ddd',
-    borderRadius: '5px',
+    border: '1px solid #444',
+    borderRadius: '4px',
+    backgroundColor: '#0f0f0f',
     fontSize: '15px',
     fontFamily: 'monospace',
-    color: '#555',
+    color: '#ffffff',
     textTransform: 'uppercase' as const
   },
   botaoSalvar: {
@@ -427,7 +434,7 @@ const styles = {
     alignItems: 'center',
     gap: '10px',
     marginTop: '5px',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#333',
     padding: '10px',
     borderRadius: '5px'
   },

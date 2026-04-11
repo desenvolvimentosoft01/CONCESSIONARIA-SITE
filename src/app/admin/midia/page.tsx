@@ -286,7 +286,7 @@ const styles = {
   },
   tabAtiva: {
     padding: '10px 20px',
-    backgroundColor: '#ff6b00',
+    backgroundColor: '#c5a059',
     color: 'white',
     border: 'none',
     borderRadius: '5px',

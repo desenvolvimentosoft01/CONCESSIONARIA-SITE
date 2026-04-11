@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
 /* Reset global */
 * {
   margin: 0;
@@ -9,10 +11,11 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
+  background-color: #000000; /* Preto absoluto para evitar tons arroxeados */
   min-height: 100vh;
   scroll-behavior: smooth;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
@@ -34,7 +37,7 @@ body {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
@@ -42,15 +45,40 @@ body {
   }
 }
 
+/* Botão Estilo TCar */
+.btn-premium {
+  display: inline-block;
+  padding: 18px 45px;
+  background-color: #c5a059;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 13px;
+  border: 1px solid #c5a059;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px; /* TCar usa bordas quase retas */
+}
+
+.btn-premium:hover {
+  background-color: transparent;
+  color: #c5a059;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
 @keyframes pulse {
   0% {
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.4);
   }
   50% {
-    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.8);
+    box-shadow: 0 4px 20px rgba(197, 160, 89, 0.8);
   }
   100% {
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.4);
   }
 }
 
@@ -102,4 +130,26 @@ a {
     width: 28px;
     height: 28px;
   }
+}
+
+/* Estilos para Formulários Admin e Login */
+.admin-input {
+  background-color: #1a1a1a !important;
+  border: 1px solid #333 !important;
+  color: white !important;
+  padding: 12px !important;
+  border-radius: 4px !important;
+  transition: border-color 0.3s ease;
+}
+
+.admin-input:focus {
+  border-color: #c5a059 !important;
+  outline: none;
+}
+
+.login-card {
+  background-color: #1a1a1a;
+  border: 1px solid #c5a059;
+  padding: 40px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
 }

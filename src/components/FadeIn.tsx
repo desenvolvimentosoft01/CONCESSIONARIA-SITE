@@ -1,43 +1,52 @@
 'use client';
-
-import { useEffect, useRef, ReactNode } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface FadeInProps {
-  children: ReactNode;
+  children: React.ReactNode;
   delay?: number;
+  y?: number;
+  duration?: number;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-export default function FadeIn({ children, delay = 0 }: FadeInProps) {
-  const elementRef = useRef<HTMLDivElement>(null);
+export default function FadeIn({ 
+  children, 
+  delay = 0, 
+  y = 40, 
+  duration = 0.8, 
+  className = "",
+  style = {}
+}: FadeInProps) {
+  const [MotionDiv, setMotionDiv] = useState<any>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add('fade-in-visible');
-            }, delay);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    // Importação dinâmica para evitar erros de build se a lib sumir
+    import('framer-motion').then((mod) => {
+      setMotionDiv(() => mod.motion.div);
+    }).catch(() => {
+      console.warn('Framer Motion não encontrado. Renderizando sem animações.');
+    });
+  }, []);
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current);
-      }
-    };
-  }, [delay]);
+  if (!MotionDiv) {
+    return <div className={className} style={style}>{children}</div>;
+  }
 
   return (
-    <div ref={elementRef} className="fade-in-element">
+    <MotionDiv
+      initial={{ opacity: 0, y: y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ 
+        duration: duration, 
+        delay: delay / 1000, 
+        ease: [0.16, 1, 0.3, 1] /* EaseOut Expo: mais suave no final */
+      }}
+      className={className}
+      style={style}
+    >
       {children}
-    </div>
+    </MotionDiv>
   );
 }

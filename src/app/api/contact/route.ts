@@ -67,7 +67,7 @@ export async function POST(request: Request) {
             color: white;
             padding: 40px 30px;
             text-align: center;
-            border-bottom: 4px solid #ff6b00;
+            border-bottom: 4px solid #c5a059;
           }
           
           .header h1 {
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
           .header p {
             font-size: 16px;
             opacity: 0.9;
-            color: #ff6b00;
+            color: #c5a059;
             font-weight: bold;
           }
           
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
             font-size: 20px;
             margin-bottom: 25px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #ff6b00;
+            border-bottom: 2px solid #c5a059;
             text-transform: uppercase;
             letter-spacing: 2px;
           }
@@ -102,7 +102,7 @@ export async function POST(request: Request) {
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 25px;
-            border-left: 4px solid #ff6b00;
+            border-left: 4px solid #c5a059;
           }
           
           .info-row {
@@ -146,7 +146,7 @@ export async function POST(request: Request) {
           }
           
           .message-box h3 {
-            color: #ff6b00;
+            color: #c5a059;
             margin-bottom: 15px;
             font-size: 18px;
             display: flex;
@@ -174,7 +174,7 @@ export async function POST(request: Request) {
             color: white;
             padding: 30px;
             text-align: center;
-            border-top: 4px solid #ff6b00;
+            border-top: 4px solid #c5a059;
           }
           
           .footer p {
@@ -183,7 +183,7 @@ export async function POST(request: Request) {
           }
           
           .footer .phone {
-            color: #ff6b00;
+            color: #c5a059;
             font-size: 20px;
             font-weight: bold;
             margin: 10px 0;
@@ -191,7 +191,7 @@ export async function POST(request: Request) {
           
           .badge {
             display: inline-block;
-            background: #ff6b00;
+            background: #c5a059;
             color: white;
             padding: 5px 15px;
             border-radius: 20px;

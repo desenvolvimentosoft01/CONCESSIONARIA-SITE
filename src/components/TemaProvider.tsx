@@ -24,11 +24,11 @@ export default function TemaProvider() {
 
   const cssVars = `
     :root {
-      --cor-primaria: ${cores.cor_primaria || '#ff6b00'};
+      --cor-primaria: ${cores.cor_primaria || '#c5a059'};
       --cor-secundaria: ${cores.cor_secundaria || '#333333'};
       --cor-header: ${cores.cor_header || '#1a1a1a'};
       --cor-footer: ${cores.cor_footer || '#1a1a1a'};
-      --cor-botao-primario: ${cores.cor_botao_primario || '#ff6b00'};
+      --cor-botao-primario: ${cores.cor_botao_primario || '#c5a059'};
       --cor-botao-secundario: ${cores.cor_botao_secundario || '#333333'};
       --cor-whatsapp: ${cores.cor_whatsapp || '#25d366'};
       --cor-link: ${cores.cor_link || '#007bff'};

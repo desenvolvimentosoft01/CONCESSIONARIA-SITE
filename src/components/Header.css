@@ -1,12 +1,9 @@
 /* Header.css */
 .header-fixo {
-  background-color: #1a1a1a;
+  background-color: #000000;
   color: white;
-  border-bottom: 3px solid #ff6b00;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  border-bottom: 1px solid #c5a059;
+  position: relative;
   width: 100%;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
@@ -31,7 +28,9 @@
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -1px;
   margin: 0;
   color: white;
 }
@@ -90,22 +89,23 @@
 }
 
 .menuLink:hover {
-  border-bottom-color: #ff6b00;
+  border-bottom-color: #c5a059;
+  color: #c5a059;
 }
 
 .menuLinkAtivo {
-  border-bottom: 2px solid #ff6b00;
+  border-bottom: 2px solid #c5a059;
 }
 
 .menuLinkAdmin {
-  background-color: #ff6b00;
+  background-color: #c5a059;
   padding: 8px 15px !important;
   border-radius: 5px;
   border-bottom: none !important;
 }
 
 .menuLinkAdmin:hover {
-  background-color: #e55f00;
+  background-color: #b38f48;
   border-bottom: none !important;
 }
 
@@ -125,7 +125,7 @@
 }
 
 .menuMobileLink:hover {
-  color: #ff6b00;
+  color: #c5a059;
 }
 
 /* Barra inferior com endereço e redes sociais */
@@ -155,7 +155,7 @@
 
 .enderecoIcon {
   font-size: 14px;
-  color: #ff6b00;
+  color: #c5a059;
 }
 
 .redesSociais {

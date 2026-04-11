@@ -89,7 +89,7 @@ export default function Carrossel({ midias }: CarrosselProps) {
             onClick={() => setIndiceAtual(index)}
             style={{
               ...styles.indicador,
-              backgroundColor: index === indiceAtual ? '#ff6b00' : 'rgba(255,255,255,0.5)',
+              backgroundColor: index === indiceAtual ? '#c5a059' : 'rgba(255,255,255,0.5)',
               cursor: 'pointer'
             }}
           />
@@ -146,7 +146,7 @@ const styles = {
   },
   carrosselBotao: {
     padding: '12px 30px',
-    backgroundColor: '#ff6b00',
+    backgroundColor: '#c5a059',
     color: 'white',
     textDecoration: 'none',
     borderRadius: '5px',
@@ -201,6 +201,6 @@ const styles = {
     width: '12px',
     height: '12px',
     borderRadius: '50%',
-    backgroundColor: '#ff6b00'
+    backgroundColor: '#c5a059'
   }
 };
