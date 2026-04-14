@@ -1,8 +1,1 @@
-<<<<<<< HEAD
-# 
-
-=======
->>>>>>> fbc7db7 (fix: correções)
-# CONCESSIONARIA-SITE
-# CONCESSIONARIA-SITE
-# CONCESSIONARIA-SITE
+# Site para Concessionária de Veículos!
