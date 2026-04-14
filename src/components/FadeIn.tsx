@@ -1,13 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
-interface FadeInProps {
+interface FadeInProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   delay?: number;
   y?: number;
   duration?: number;
-  className?: string;
-  style?: React.CSSProperties;
 }
 
 export default function FadeIn({ 
@@ -16,7 +14,8 @@ export default function FadeIn({
   y = 40, 
   duration = 0.8, 
   className = "",
-  style = {}
+  style = {},
+  ...rest
 }: FadeInProps) {
   const [MotionDiv, setMotionDiv] = useState<any>(null);
 
@@ -30,7 +29,7 @@ export default function FadeIn({
   }, []);
 
   if (!MotionDiv) {
-    return <div className={className} style={style}>{children}</div>;
+    return <div className={className} style={style} {...rest}>{children}</div>;
   }
 
   return (
@@ -41,10 +40,11 @@ export default function FadeIn({
       transition={{ 
         duration: duration, 
         delay: delay / 1000, 
-        ease: [0.16, 1, 0.3, 1] /* EaseOut Expo: mais suave no final */
+        ease: [0.16, 1, 0.3, 1]
       }}
       className={className}
       style={style}
+      {...rest}
     >
       {children}
     </MotionDiv>
