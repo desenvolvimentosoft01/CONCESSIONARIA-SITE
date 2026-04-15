@@ -13,32 +13,41 @@ import '../components/FadeIn.css';
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const carros = await query(`
-    SELECT c.*, 
-           (SELECT imagem_url FROM TAB_CARRO_IMAGEM 
-            WHERE carro_id = c.id 
-            ORDER BY ordem LIMIT 1) as primeira_imagem
-    FROM TAB_CARRO c
-    WHERE c.disponivel = true
-  `);
+  let carros: any[] = [];
+  let midias: any[] = [];
+  let midiasSobre: any[] = [];
+  let bannerEstoque: any[] = [];
 
-  const midias = await query(`
-    SELECT * FROM TAB_MIDIA 
-    WHERE secao = 'carrossel' 
-    ORDER BY ordem
-  `);
+  try {
+    carros = await query(`
+      SELECT c.*,
+             (SELECT imagem_url FROM TAB_CARRO_IMAGEM
+              WHERE carro_id = c.id
+              ORDER BY ordem LIMIT 1) as primeira_imagem
+      FROM TAB_CARRO c
+      WHERE c.disponivel = true
+    `);
 
-  const midiasSobre = await query(`
-    SELECT * FROM TAB_MIDIA 
-    WHERE secao = 'sobre' 
-    ORDER BY ordem
-  `);
+    midias = await query(`
+      SELECT * FROM TAB_MIDIA
+      WHERE secao = 'carrossel'
+      ORDER BY ordem
+    `);
 
-  const bannerEstoque = await query(`
-    SELECT url FROM TAB_MIDIA 
-    WHERE secao = 'banner-estoque' 
-    ORDER BY ordem LIMIT 1
-  `);
+    midiasSobre = await query(`
+      SELECT * FROM TAB_MIDIA
+      WHERE secao = 'sobre'
+      ORDER BY ordem
+    `);
+
+    bannerEstoque = await query(`
+      SELECT url FROM TAB_MIDIA
+      WHERE secao = 'banner-estoque'
+      ORDER BY ordem LIMIT 1
+    `);
+  } catch (error) {
+    console.error('Erro ao carregar dados da home:', error);
+  }
 
   const heroMidia = midias[0];
 
