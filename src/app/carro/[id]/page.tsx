@@ -6,9 +6,15 @@ import FadeIn from '@/components/FadeIn';
 import Link from 'next/link';
 
 export default async function CarroDetalhesPage({ params }: { params: { id: string } }) {
-  const carroResult = await query('SELECT * FROM TAB_CARRO WHERE id = $1', [params.id]);
-  const imagens = await query('SELECT * FROM TAB_CARRO_IMAGEM WHERE carro_id = $1 ORDER BY ordem', [params.id]);
-  
+  let carroResult: any[] = [];
+  let imagens: any[] = [];
+  try {
+    carroResult = await query('SELECT * FROM TAB_CARRO WHERE id = $1', [params.id]);
+    imagens = await query('SELECT * FROM TAB_CARRO_IMAGEM WHERE carro_id = $1 ORDER BY ordem', [params.id]);
+  } catch (error) {
+    console.error('Erro ao carregar detalhes do carro:', error);
+  }
+
   if (carroResult.length === 0) return <div>Veículo não encontrado</div>;
   const carro = carroResult[0];
 

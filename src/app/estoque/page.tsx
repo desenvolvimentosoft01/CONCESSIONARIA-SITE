@@ -8,20 +8,24 @@ export const dynamic = 'force-dynamic';
 
 export default async function EstoquePage({ searchParams }: any) {
   const marca = searchParams.marca || '';
-  
-  // Usando placeholders para segurança e id para ordenação
+
   const sql = `
-    SELECT c.*, 
-           (SELECT imagem_url FROM TAB_CARRO_IMAGEM 
-            WHERE carro_id = c.id 
+    SELECT c.*,
+           (SELECT imagem_url FROM TAB_CARRO_IMAGEM
+            WHERE carro_id = c.id
             ORDER BY ordem LIMIT 1) as primeira_imagem
     FROM TAB_CARRO c
-    WHERE c.disponivel = true 
+    WHERE c.disponivel = true
     ${marca ? 'AND c.marca ILIKE $1' : ''}
     ORDER BY c.id DESC
   `;
 
-  const carros = await query(sql, marca ? [`%${marca}%`] : []);
+  let carros: any[] = [];
+  try {
+    carros = await query(sql, marca ? [`%${marca}%`] : []);
+  } catch (error) {
+    console.error('Erro ao carregar estoque:', error);
+  }
 
   return (
     <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>

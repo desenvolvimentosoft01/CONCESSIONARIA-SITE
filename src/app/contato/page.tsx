@@ -7,7 +7,12 @@ import './contato.css';
 export const dynamic = 'force-dynamic';
 
 export default async function ContatoPage() {
-  const bannerContato = await query(`SELECT url FROM TAB_MIDIA WHERE secao = 'banner-contato' ORDER BY ordem LIMIT 1`);
+  let bannerContato: any[] = [];
+  try {
+    bannerContato = await query(`SELECT url FROM TAB_MIDIA WHERE secao = 'banner-contato' ORDER BY ordem LIMIT 1`);
+  } catch (error) {
+    console.error('Erro ao carregar banner de contato:', error);
+  }
 
   return (
     <div className="container" style={{ backgroundColor: '#fcfcfc', minHeight: '100vh', paddingTop: '0' }}>

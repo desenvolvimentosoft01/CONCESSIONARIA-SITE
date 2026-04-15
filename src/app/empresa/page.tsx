@@ -9,8 +9,14 @@ import './empresa.css';
 export const dynamic = 'force-dynamic';
 
 export default async function EmpresaPage() {
-  const midiasEmpresa = await query(`SELECT * FROM TAB_MIDIA WHERE secao = 'empresa' ORDER BY ordem`);
-  const bannerEmpresa = await query(`SELECT url FROM TAB_MIDIA WHERE secao = 'banner-empresa' ORDER BY ordem LIMIT 1`);
+  let midiasEmpresa: any[] = [];
+  let bannerEmpresa: any[] = [];
+  try {
+    midiasEmpresa = await query(`SELECT * FROM TAB_MIDIA WHERE secao = 'empresa' ORDER BY ordem`);
+    bannerEmpresa = await query(`SELECT url FROM TAB_MIDIA WHERE secao = 'banner-empresa' ORDER BY ordem LIMIT 1`);
+  } catch (error) {
+    console.error('Erro ao carregar dados da empresa:', error);
+  }
 
   return (
     <div className="empresa-container" style={{ backgroundColor: '#fcfcfc' }}>

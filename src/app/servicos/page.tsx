@@ -7,7 +7,12 @@ import './servicos.css';
 export const dynamic = 'force-dynamic';
 
 export default async function ServicosPage() {
-  const bannerServicos = await query(`SELECT url FROM TAB_MIDIA WHERE secao = 'banner-servicos' ORDER BY ordem LIMIT 1`);
+  let bannerServicos: any[] = [];
+  try {
+    bannerServicos = await query(`SELECT url FROM TAB_MIDIA WHERE secao = 'banner-servicos' ORDER BY ordem LIMIT 1`);
+  } catch (error) {
+    console.error('Erro ao carregar banner de serviços:', error);
+  }
 
   const servicos = [
     { icone: '🚗', titulo: 'Venda de Veículos', desc: 'Estoque selecionado com as melhores marcas e modelos do mercado.' },
