@@ -2,6 +2,7 @@ import { query } from '@/lib/db';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FadeIn from '@/components/FadeIn';
+import ContatoForm from './ContatoForm';
 import './contato.css';
 
 export const dynamic = 'force-dynamic';
@@ -74,8 +75,7 @@ export default async function ContatoPage() {
 
           <div className="formularioContato">
             <h2 className="formTitulo">Envie uma Mensagem</h2>
-            {/* Formulário aqui... */}
-            <p style={{ color: '' }}>Utilize nosso formulário para entrar em contato diretamente com nossa equipe de vendas.</p>
+            <ContatoForm />
           </div>
         </div>
       </main>
