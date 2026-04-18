@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "UserPromptSubmit",
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "Verifique se a mensagem do usuário contém a palavra 'deploy'. Se contiver, detecte mudanças pendentes no repositório git (use 'git status' e 'git diff'). Se houver mudanças:\n\n1. Agrupe os arquivos modificados de forma inteligente (por tipo de mudança: features, fixes, refatorações, docs, etc)\n2. Para cada grupo, proponha um commit message seguindo padrão convencional (feat:, fix:, refactor:, docs:, style:, etc)\n3. Mostre ao usuário exatamente quais arquivos entrariam em cada commit\n4. Peça aprovação antes de prosseguir\n\nSe aprovado, execute os commits separados e depois 'git push' para o repositório remoto.\n\nSe não houver 'deploy' na mensagem ou se não houver mudanças pendentes, não faça nada.",
+            "timeout": 120,
+            "statusMessage": "Processando deploy..."
+          }
+        ]
+      }
+    ]
+  }
+}
