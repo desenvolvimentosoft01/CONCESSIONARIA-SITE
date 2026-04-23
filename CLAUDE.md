@@ -92,3 +92,31 @@ All API routes are Next.js Route Handlers in `src/app/api/`. They return JSON an
 ### Styling
 
 CSS Modules via co-located `.css` files (e.g. `admin-carros.css` next to `page.tsx`). Global styles in `src/app/globals.css`. Class names are in Portuguese (e.g. `.botaoDetalhes`, `.cardPreco`). No Tailwind or CSS-in-JS except the dynamic `<style>` injection in `TemaProvider`.
+
+## 📚 Documentação do Obsidian
+
+**Antes de implementar ou corrigir qualquer coisa, sempre consulte a documentação no Obsidian:**
+
+Notas disponíveis em `C:\Users\Lucas\Documents\Obsidian Vault\CONCESSIONARIA-SITE\`:
+
+- **00-Index.md** — Visão geral do projeto
+- **01-Arquitetura.md** — Stack e estrutura técnica
+- **02-Banco-de-Dados.md** — Schema, tabelas e convenções
+- **03-Autenticacao.md** — Sistema de login e sessão
+- **04-Rotas.md** — Rotas públicas e admin
+- **05-API.md** — Endpoints e handlers
+- **06-Configuracao.md** — Setup, variáveis de ambiente, tema
+- **07-Cloudinary.md** — Gerenciamento de imagens
+
+### Como usar:
+
+Sempre que for **implementar algo novo ou corrigir um bug**, mencione qual nota devo consultar:
+
+**Exemplo:**
+> "Preciso adicionar autenticação com JWT. Consulta 03-Autenticacao.md, 02-Banco-de-Dados.md e me ajuda."
+
+Ou deixe para eu detectar automaticamente:
+
+> "Preciso fazer upload de imagens. Como faço?"
+
+Vou carregar automaticamente a documentação relevante (07-Cloudinary.md, 02-Banco-de-Dados.md) baseado na tarefa.
