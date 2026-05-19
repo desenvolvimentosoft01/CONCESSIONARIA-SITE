@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "Bash(where python *)",
+      "Bash(pip install *)",
+      "Bash(python -m pip install anthropic --quiet)",
+      "Bash(\"C:\\\\Users\\\\Lucas\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python.exe\" -m pip install anthropic --quiet)",
+      "Bash(git -C \"c:/WebProjetos/Concessionaria_Site\" status)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'docs: atualizar documentacao Obsidian no CLAUDE.md *)",
+      "Bash(git push *)"
+    ]
+  }
+}
