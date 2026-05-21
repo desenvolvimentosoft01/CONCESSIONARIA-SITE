@@ -93,30 +93,29 @@ All API routes are Next.js Route Handlers in `src/app/api/`. They return JSON an
 
 CSS Modules via co-located `.css` files (e.g. `admin-carros.css` next to `page.tsx`). Global styles in `src/app/globals.css`. Class names are in Portuguese (e.g. `.botaoDetalhes`, `.cardPreco`). No Tailwind or CSS-in-JS except the dynamic `<style>` injection in `TemaProvider`.
 
-## 📚 Documentação do Obsidian
+## 📚 Documentação do Projeto
 
-**Antes de implementar ou corrigir qualquer coisa, sempre consulte a documentação no Obsidian:**
+**Toda a documentação está em `docs/` — sempre consultada automaticamente antes de implementar ou corrigir.**
 
-Notas disponíveis em `C:\Users\Lucas\Documents\Obsidian Vault\CONCESSIONARIA-SITE\`:
+Arquivos disponíveis:
 
-- **00-Index.md** — Visão geral do projeto
-- **01-Arquitetura.md** — Stack e estrutura técnica
-- **02-Banco-de-Dados.md** — Schema, tabelas e convenções
-- **03-Autenticacao.md** — Sistema de login e sessão
-- **04-Rotas.md** — Rotas públicas e admin
-- **05-API.md** — Endpoints e handlers
-- **06-Configuracao.md** — Setup, variáveis de ambiente, tema
-- **07-Cloudinary.md** — Gerenciamento de imagens
+- **[docs/00-Index.md](docs/00-Index.md)** — Visão geral, índice, setup rápido
+- **[docs/01-Arquitetura.md](docs/01-Arquitetura.md)** — Stack, estrutura técnica, padrões
+- **[docs/02-Banco-de-Dados.md](docs/02-Banco-de-Dados.md)** — Schema, tabelas, SQL
+- **[docs/03-Autenticacao.md](docs/03-Autenticacao.md)** — Login, sessão, cookies
+- **[docs/04-Rotas.md](docs/04-Rotas.md)** — Rotas públicas e admin, estrutura
+- **[docs/05-API.md](docs/05-API.md)** — Endpoints, request/response, tratamento de erros
+- **[docs/06-Configuracao.md](docs/06-Configuracao.md)** — Setup local, .env, tema, deploy
+- **[docs/07-Cloudinary.md](docs/07-Cloudinary.md)** — Upload, transformações, gerenciamento
 
 ### Como usar:
 
-Sempre que for **implementar algo novo ou corrigir um bug**, mencione qual nota devo consultar:
+Eu consulto automaticamente a documentação relevante antes de qualquer implementação. Você pode também:
 
-**Exemplo:**
-> "Preciso adicionar autenticação com JWT. Consulta 03-Autenticacao.md, 02-Banco-de-Dados.md e me ajuda."
+**Referência direta:**
+> "Preciso adicionar autenticação com JWT. Ver docs/03-Autenticacao.md"
 
-Ou deixe para eu detectar automaticamente:
-
+**Ou deixar que eu detecte:**
 > "Preciso fazer upload de imagens. Como faço?"
 
-Vou carregar automaticamente a documentação relevante (07-Cloudinary.md, 02-Banco-de-Dados.md) baseado na tarefa.
+A documentação evolui com o projeto e fica versionada no git.
