@@ -49,3 +49,35 @@ digest: "3562989769"
  ✓ Compiled in 995ms (1246 modules)
  GET /financiamento 200 in 247ms
  GET /financiamento 200 in 59ms
+ GET /financiamento 200 in 112ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 815ms (1249 modules)
+ GET /placeholder-hero.jpg 404 in 1156ms
+ ○ Compiling /api/configuracao ...
+ ✓ Compiled /api/configuracao in 883ms (657 modules)
+ GET /api/configuracao 200 in 1207ms
+ GET /api/configuracao 200 in 41ms
+ ○ Compiling / ...
+ ✓ Compiled /estoque in 5.5s (1348 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /_next/static/webpack/2c87507e20272cc2.webpack.hot-update.json 404 in 2351ms
+ ○ Compiling /empresa ...
+ ✓ Compiled /empresa in 2.4s (1355 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /_next/static/webpack/2c87507e20272cc2.webpack.hot-update.json 404 in 1662ms
+ GET /financiamento 200 in 3083ms
+ GET /placeholder-hero.jpg 404 in 82ms
+ GET /api/configuracao 200 in 100ms
+ GET /api/configuracao 200 in 90ms
+ ○ Compiling /contato ...
+ ✓ Compiled /contato in 1093ms (1379 modules)
+ GET /placeholder-hero.jpg 404 in 70ms
+ ○ Compiling /api/financiamento-contato ...
+ ✓ Compiled /api/financiamento-contato in 1689ms (746 modules)
+ POST /api/financiamento-contato 200 in 6030ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1007ms (1408 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1410ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1023ms (672 modules)
+ ✓ Compiled in 2.6s (665 modules)
