@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { criarLeadAutomatico } from '@/lib/crm';
 
 const DADOS_LOJA = {
   nome: 'LUCAS VEÍCULOS',
@@ -224,6 +225,16 @@ export async function POST(request: NextRequest) {
       replyTo: email,
       subject: `💰 Solicitação de Financiamento: ${nome}`,
       html: buildTemplate({ nome, email, telefone, valorVeiculo, mensagem, dataHora, ip }),
+    });
+
+    await criarLeadAutomatico({
+      nome,
+      email,
+      telefone,
+      mensagem: valorVeiculo
+        ? `Valor do veículo: ${valorVeiculo}\n\n${mensagem}`
+        : mensagem,
+      origem: 'financiamento',
     });
 
     return NextResponse.json({ sucesso: true, mensagem: 'Solicitação de financiamento enviada com sucesso!' });
