@@ -220,6 +220,10 @@
 - `TAB_CONFIGURACAO` — key-value tema (id, chave, valor)
 - `TAB_USUARIO` — admin users (id, nome, email, senha, ativo)
 - `TAB_AUDITORIA` — audit log (id, usuario, acao, tabela, registro_id, dados_antigos, dados_novos, timestamp, ip, user_agent)
+- `TAB_LEAD_ETAPA` — etapas do funil com nome, ordem e cor
+- `TAB_LEAD` — leads com origem, etapa, responsável e valor estimado
+- `TAB_LEAD_INTERACAO` — histórico de contatos por lead (ligação, WhatsApp, etc.)
+- `TAB_LEAD_TAREFA` — tarefas e follow-ups com prazo e status
 
 ### 4.2 Estrutura de Pastas
 
@@ -296,6 +300,14 @@ NODE_ENV=production
 - [x] Admin Financiamento (`/admin/financiamento`) com CRUD completo
 - [x] API `/api/financiamento-contato` com envio de email
 - [x] TemaProvider (injeção dinâmica de cores/CSS)
+- [x] CRM: captura automática de leads via /contato e /financiamento
+- [x] CRM: dashboard com métricas (total, conversão, ticket médio, tarefas vencidas)
+- [x] CRM: lista de leads com filtros por etapa e origem
+- [x] CRM: detalhe do lead com histórico de interações e tarefas
+- [x] CRM: funil Kanban (Novo → Contactado → Negociação → Ganho → Perdido)
+- [x] CRM: tarefas com prazo e conclusão via checkbox
+- [x] CRM: relatórios de conversão com gráfico de barras e funil
+- [x] CRM: configurações de etapas do funil
 
 ### Em Desenvolvimento 🔄
 - [ ] Páginas públicas principais (Home, Estoque, Detalhe, Empresa, Serviços)

@@ -68,6 +68,11 @@ export default function DashboardPage() {
             <h3 style={{ color: '#c5a059', marginBottom: '10px' }}>🎨 Personalização</h3>
             <p style={{ color: '#888', fontSize: '14px' }}>Alterar cores e tema do site</p>
           </Link>
+
+          <Link href="/admin/crm" className="dashboard-card" style={{ backgroundColor: '#1a1a1a', padding: '30px', borderRadius: '4px', border: '1px solid rgba(197,160,89,0.3)' }}>
+            <h3 style={{ color: '#c5a059', marginBottom: '10px' }}>👥 CRM</h3>
+            <p style={{ color: '#888', fontSize: '14px' }}>Leads, funil de vendas e follow-ups</p>
+          </Link>
         </div>
       </main>
     </div>
