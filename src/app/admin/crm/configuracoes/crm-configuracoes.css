@@ -1,0 +1,127 @@
+.paginaConfiguracoes {
+  background-color: #000;
+  min-height: 100vh;
+  color: #fff;
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 20px;
+}
+
+.tituloPagina { font-size: 22px; font-weight: 900; }
+
+.navCrm { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+
+.linkNav {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #777;
+  border: 1px solid #1a1a1a;
+}
+
+.linkNav:hover { color: #fff; border-color: #333; }
+
+.linkNavAtivo {
+  color: #c5a059;
+  border-color: rgba(197, 160, 89, 0.4);
+  background-color: rgba(197, 160, 89, 0.08);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.card {
+  background-color: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.cardTitulo {
+  font-size: 11px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.listaEtapas { display: flex; flex-direction: column; gap: 8px; }
+
+.itemEtapa {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background-color: #111;
+  border-radius: 4px;
+  border: 1px solid #1e1e1e;
+}
+
+.dragHandle { color: #333; cursor: grab; font-size: 16px; }
+
+.pontoEtapa {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.nomeEtapa { font-size: 13px; color: #ccc; flex: 1; }
+.idEtapa { font-size: 11px; color: #444; }
+
+.separadorColunaLateral { display: flex; flex-direction: column; gap: 20px; }
+
+.listaTipos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badgeTipo {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  background-color: #1a1a1a;
+  color: #888;
+  border: 1px solid #222;
+}
+
+.listaCaptura { display: flex; flex-direction: column; gap: 10px; }
+
+.itemCaptura {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background-color: #111;
+  border-radius: 4px;
+  border: 1px solid #1e1e1e;
+}
+
+.nomeCaptura { font-size: 13px; color: #ccc; }
+
+.statusAtivo {
+  font-size: 12px;
+  color: #28a745;
+  font-weight: 600;
+}
+
+.statusAtivo::before { content: '● '; }
+
+@media (max-width: 768px) {
+  .grade { grid-template-columns: 1fr; }
+}

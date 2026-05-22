@@ -1,0 +1,389 @@
+.paginaCrm {
+  background-color: #000;
+  min-height: 100vh;
+  color: #fff;
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 20px;
+}
+
+.tituloPagina {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+
+.navCrm {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.linkNav {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #777;
+  border: 1px solid #1a1a1a;
+  transition: all 0.2s;
+}
+
+.linkNav:hover {
+  color: #fff;
+  border-color: #333;
+}
+
+.linkNavAtivo {
+  color: #c5a059;
+  border-color: rgba(197, 160, 89, 0.4);
+  background-color: rgba(197, 160, 89, 0.08);
+}
+
+.gridMetricas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.cardMetrica {
+  background-color: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.labelMetrica {
+  font-size: 11px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.valorMetrica {
+  font-size: 32px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.valorMetricaPerigo {
+  color: #dc3545;
+}
+
+.valorMetricaDourado {
+  color: #c5a059;
+}
+
+.gridPrincipal {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.colunaPrincipal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.colunaLateral {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background-color: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.cardTitulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linkVerTodos {
+  font-size: 11px;
+  color: #c5a059;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.tabelaLeads {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabelaLeads th {
+  font-size: 10px;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: left;
+  padding: 0 0 12px;
+  border-bottom: 1px solid #1a1a1a;
+  font-weight: 700;
+}
+
+.tabelaLeads td {
+  padding: 14px 0;
+  border-bottom: 1px solid #111;
+  vertical-align: middle;
+}
+
+.tabelaLeads tr:last-child td {
+  border-bottom: none;
+}
+
+.tabelaLeads tr {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.tabelaLeads tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.nomeColuna {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ddd;
+}
+
+.emailColuna {
+  font-size: 12px;
+  color: #555;
+  margin-top: 2px;
+}
+
+.badgeEtapa {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.badgeOrigem {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background-color: #1a1a1a;
+  color: #888;
+  border: 1px solid #222;
+}
+
+.dataColuna {
+  font-size: 12px;
+  color: #555;
+}
+
+.listaTarefas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.itemTarefa {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background-color: #111;
+  border-radius: 4px;
+  border: 1px solid #1e1e1e;
+}
+
+.checkboxTarefa {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: #c5a059;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.textoTarefa {
+  font-size: 13px;
+  color: #ccc;
+  flex: 1;
+}
+
+.leadTarefa {
+  font-size: 11px;
+  color: #555;
+  margin-top: 2px;
+}
+
+.prazoTarefa {
+  font-size: 11px;
+  color: #555;
+  white-space: nowrap;
+}
+
+.prazoVencido {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.itemFunil {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.labelFunil {
+  font-size: 12px;
+  color: #888;
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.barraFunilContainer {
+  flex: 1;
+  background-color: #1a1a1a;
+  border-radius: 2px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.barraFunil {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.contagemFunil {
+  font-size: 12px;
+  color: #555;
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.separador {
+  border: none;
+  border-top: 1px solid #1a1a1a;
+  margin: 16px 0;
+}
+
+.linhaConversao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.textoConversao {
+  font-size: 12px;
+  color: #777;
+}
+
+.percentualConversao {
+  font-size: 14px;
+  font-weight: 700;
+  color: #c5a059;
+}
+
+.barraConversaoContainer {
+  background-color: #1a1a1a;
+  border-radius: 2px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.barraConversao {
+  height: 100%;
+  background-color: #c5a059;
+  border-radius: 2px;
+}
+
+.gridOrigens {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  height: 80px;
+}
+
+.colunaOrigem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.barraOrigem {
+  width: 100%;
+  background-color: #c5a059;
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+  transition: height 0.3s ease;
+}
+
+.labelOrigem {
+  font-size: 10px;
+  color: #555;
+  text-align: center;
+}
+
+.valorOrigem {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.semDados {
+  color: #444;
+  font-size: 13px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+@media (max-width: 1024px) {
+  .gridMetricas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gridPrincipal {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .gridMetricas {
+    grid-template-columns: 1fr;
+  }
+}
