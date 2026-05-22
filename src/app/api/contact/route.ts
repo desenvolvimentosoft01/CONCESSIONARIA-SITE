@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { criarLeadAutomatico } from '@/lib/crm';
+import { enviarWhatsAppLead } from '@/lib/whatsapp';
 
 const DADOS_LOJA = {
   nome: 'LUCAS VEÍCULOS',
@@ -225,6 +226,14 @@ export async function POST(request: NextRequest) {
       email,
       telefone,
       mensagem: `Assunto: ${assunto}\n\n${mensagem}`,
+      origem: 'contato',
+    });
+
+    await enviarWhatsAppLead({
+      nomeCliente: nome,
+      telefoneCliente: telefone,
+      emailCliente: email,
+      veiculoInteresse: undefined,
       origem: 'contato',
     });
 

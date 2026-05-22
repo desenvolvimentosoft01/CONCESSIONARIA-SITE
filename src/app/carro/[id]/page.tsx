@@ -5,17 +5,24 @@ import VehicleMediaViewer from '@/components/VehicleMediaViewer';
 import FadeIn from '@/components/FadeIn';
 import Link from 'next/link';
 
-export default async function CarroDetalhesPage({ params }: { params: { id: string } }) {
+export default async function CarroDetalhesPage({
+  params
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params;
   let carroResult: any[] = [];
   let imagens: any[] = [];
+
   try {
-    carroResult = await query('SELECT * FROM TAB_CARRO WHERE id = $1', [params.id]);
-    imagens = await query('SELECT * FROM TAB_CARRO_IMAGEM WHERE carro_id = $1 ORDER BY ordem', [params.id]);
+    carroResult = await query('SELECT * FROM "TAB_CARRO" WHERE id = $1', [id]);
+    imagens = await query('SELECT * FROM "TAB_CARRO_IMAGEM" WHERE carro_id = $1 ORDER BY ordem', [id]);
   } catch (error) {
     console.error('Erro ao carregar detalhes do carro:', error);
+    return <div style={{ padding: '40px', textAlign: 'center' }}>Erro ao carregar veículo</div>;
   }
 
-  if (carroResult.length === 0) return <div>Veículo não encontrado</div>;
+  if (carroResult.length === 0) return <div style={{ padding: '40px', textAlign: 'center' }}>Veículo não encontrado</div>;
   const carro = carroResult[0];
 
   // Simulação de mídias mistas (Imagens e Vídeos)
