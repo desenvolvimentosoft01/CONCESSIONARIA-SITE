@@ -13,7 +13,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const logado = sessionStorage.getItem('admin_logado');
     const nomeSalvo = sessionStorage.getItem('admin_nome');
-    
+
     if (!logado) {
       router.push('/entrar');
     } else {
@@ -29,50 +29,84 @@ export default function DashboardPage() {
   }
 
   if (carregando) {
-    return (
-      <div className="dashboard-carregando">
-        Carregando...
-      </div>
-    );
+    return <div className="dashboardCarregando">Carregando...</div>;
   }
 
   return (
-    <div className="dashboard-container" style={{ backgroundColor: '#000000', minHeight: '100vh', color: '#fff', padding: '40px 20px' }}>
-      <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', borderBottom: '1px solid #333', paddingBottom: '20px' }}>
-        <h1 style={{ fontSize: '24px', fontWeight: '900', letterSpacing: '-1px' }}>PAINEL ADMINISTRATIVO</h1>
-        <button onClick={handleLogout} style={{ backgroundColor: 'transparent', color: '#dc3545', border: '1px solid #dc3545', padding: '8px 20px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+    <div className="dashboardContainer">
+
+      {/* ── HEADER ── */}
+      <header className="dashboardHeader">
+        <h1 className="dashboardTitulo">PAINEL ADMINISTRATIVO</h1>
+        <button onClick={handleLogout} className="dashboardBotaoSair">
           Sair
         </button>
-      </div>
+      </header>
 
-      <main>
-        <h2 style={{ fontSize: '18px', color: '#c5a059', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '30px' }}>Bem-vindo, {nome}</h2>
-        
-        <div className="dashboard-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
-          <Link href="/admin/carros" className="dashboard-card" style={{ backgroundColor: '#1a1a1a', padding: '30px', borderRadius: '4px', border: '1px solid #333', transition: 'all 0.3s' }}>
-            <h3 style={{ color: '#fff', marginBottom: '10px' }}>🚗 Carros</h3>
-            <p style={{ color: '#888', fontSize: '14px' }}>Gerenciar carros da loja</p>
+      <main className="dashboardMain">
+        <p className="dashboardBoasVindas">Bem-vindo, {nome}</p>
+
+        {/* ── MÉTRICAS ── */}
+        <div className="dashboardMetricas">
+          <div className="metricaCard">
+            <div className="metricaLabel">Veículos Cadastrados</div>
+            <div className="metricaValor">24</div>
+            <div className="metricaSub">8 vendidos este mês</div>
+          </div>
+          <div className="metricaCard">
+            <div className="metricaLabel">Leads no CRM</div>
+            <div className="metricaValor metricaVlorDourado">12</div>
+            <div className="metricaSub">+3 esta semana</div>
+          </div>
+          <div className="metricaCard">
+            <div className="metricaLabel">Tarefas Vencidas</div>
+            <div className="metricaValor metricaValorVermelho">3</div>
+            <div className="metricaSub">Requerem atenção</div>
+          </div>
+        </div>
+
+        {/* ── TÍTULO ACESSO RÁPIDO ── */}
+        <div className="acessoRapidoTitulo">Acesso Rápido</div>
+
+        {/* ── GRID DE CARDS ── */}
+        <div className="dashboardGrid">
+
+          <Link href="/admin/carros" className="dashboardCard">
+            <div className="dashboardCardIcone">🚗</div>
+            <h3 className="dashboardCardTitulo">Carros</h3>
+            <p className="dashboardCardDescricao">Gerenciar veículos do estoque</p>
           </Link>
 
-          <Link href="/admin/midia" className="dashboard-card" style={{ backgroundColor: '#1a1a1a', padding: '30px', borderRadius: '4px', border: '1px solid #333' }}>
-            <h3 style={{ color: '#fff', marginBottom: '10px' }}>📁 Mídia</h3>
-            <p style={{ color: '#888', fontSize: '14px' }}>Gerenciar imagens e vídeos do site</p>
+          <Link href="/admin/midia" className="dashboardCard">
+            <div className="dashboardCardIcone">📁</div>
+            <h3 className="dashboardCardTitulo">Mídia</h3>
+            <p className="dashboardCardDescricao">Imagens e vídeos do site</p>
           </Link>
 
-          <Link href="/admin/auditoria" className="dashboard-card" style={{ backgroundColor: '#1a1a1a', padding: '30px', borderRadius: '4px', border: '1px solid #333' }}>
-            <h3 style={{ color: '#fff', marginBottom: '10px' }}>📋 Auditoria</h3>
-            <p style={{ color: '#888', fontSize: '14px' }}>Visualizar histórico de alterações</p>
+          <Link href="/admin/auditoria" className="dashboardCard">
+            <div className="dashboardCardIcone">📋</div>
+            <h3 className="dashboardCardTitulo">Auditoria</h3>
+            <p className="dashboardCardDescricao">Histórico de alterações</p>
           </Link>
 
-          <Link href="/admin/personalizacao" className="dashboard-card" style={{ backgroundColor: '#1a1a1a', padding: '30px', borderRadius: '4px', border: '1px solid #c5a059' }}>
-            <h3 style={{ color: '#c5a059', marginBottom: '10px' }}>🎨 Personalização</h3>
-            <p style={{ color: '#888', fontSize: '14px' }}>Alterar cores e tema do site</p>
+          <Link href="/admin/personalizacao" className="dashboardCard dashboardCardDestaque">
+            <div className="dashboardCardIcone">🎨</div>
+            <h3 className="dashboardCardTitulo dashboardCardTituloDourado">Personalização</h3>
+            <p className="dashboardCardDescricao">Cores e tema do site</p>
           </Link>
 
-          <Link href="/admin/crm" className="dashboard-card" style={{ backgroundColor: '#1a1a1a', padding: '30px', borderRadius: '4px', border: '1px solid rgba(197,160,89,0.3)' }}>
-            <h3 style={{ color: '#c5a059', marginBottom: '10px' }}>👥 CRM</h3>
-            <p style={{ color: '#888', fontSize: '14px' }}>Leads, funil de vendas e follow-ups</p>
+          <Link href="/admin/crm" className="dashboardCard dashboardCardDestaque">
+            <div className="dashboardCardIcone">👥</div>
+            <h3 className="dashboardCardTitulo dashboardCardTituloDourado">CRM</h3>
+            <p className="dashboardCardDescricao">Leads, funil e follow-ups</p>
           </Link>
+
+          <Link href="/admin/financiamento" className="dashboardCard">
+            <div className="dashboardCardIcone">💰</div>
+            <h3 className="dashboardCardTitulo">Financiamento</h3>
+            <p className="dashboardCardDescricao">Conteúdo da página</p>
+          </Link>
+
         </div>
       </main>
     </div>

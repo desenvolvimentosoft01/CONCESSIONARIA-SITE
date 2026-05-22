@@ -1,128 +1,203 @@
-/* dashboard.css */
-.dashboard-container {
+/* dashboard.css — versão corrigida */
+
+.dashboardContainer {
   min-height: 100vh;
-  background-color: #f5f5f5;
-  font-family: 'Arial', sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
 }
 
-.dashboard-header {
-  background-color: #1a1a1a;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* ── HEADER ── */
+.dashboardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid #1a1a1a;
+  background-color: #000000;
 }
 
-.dashboard-titulo {
-  font-size: 20px;
-  color: white;
+.dashboardTitulo {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #ffffff;
   margin: 0;
 }
 
-.dashboard-botao-sair {
-  padding: 8px 15px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
+.dashboardBotaoSair {
+  background-color: transparent;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 7px 18px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 0.2s;
 }
 
-.dashboard-botao-sair:hover {
-  background-color: #c82333;
+.dashboardBotaoSair:hover {
+  background-color: rgba(220, 53, 69, 0.1);
 }
 
-.dashboard-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 60px 20px;
+/* ── MAIN ── */
+.dashboardMain {
+  padding: 32px 40px;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
-.dashboard-boas-vindas {
-  font-size: 28px;
-  margin-bottom: 40px;
-  color: #333;
-  text-align: center;
+.dashboardBoasVindas {
+  font-size: 13px;
+  color: #c5a059;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 24px;
 }
 
-.dashboard-grid {
+/* ── MÉTRICAS ── */
+.dashboardMetricas {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
 }
 
-.dashboard-card {
-  background-color: white;
-  padding: 50px 40px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-decoration: none;
-  color: #333;
-  display: block;
-  transition: transform 0.3s, box-shadow 0.3s;
-  border-left: 5px solid #ff6b00;
-  text-align: center;
+.metricaCard {
+  background-color: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 20px 22px;
+  transition: border-color 0.2s;
 }
 
-.dashboard-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(255,107,0,0.3);
-  border-left-color: #ff6b00;
+.metricaCard:hover {
+  border-color: rgba(197, 160, 89, 0.3);
 }
 
-.dashboard-card-titulo {
+.metricaLabel {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #555555;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.metricaValor {
   font-size: 32px;
-  margin-bottom: 15px;
-  color: #ff6b00;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 6px;
 }
 
-.dashboard-card-descricao {
-  color: #666;
-  font-size: 16px;
+.metricaVlorDourado {
+  color: #c5a059;
+}
+
+.metricaValorVermelho {
+  color: #dc3545;
+}
+
+.metricaSub {
+  font-size: 11px;
+  color: #555555;
+}
+
+/* ── TÍTULO ACESSO RÁPIDO ── */
+.acessoRapidoTitulo {
+  font-size: 11px;
+  font-weight: 700;
+  color: #c5a059;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+/* ── GRID DE CARDS ── */
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+/* Card base */
+.dashboardCard {
+  background-color: #0d0d0d;
+  padding: 24px 22px;
+  border-radius: 6px;
+  border: 1px solid #1a1a1a;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.dashboardCard:hover {
+  border-color: rgba(197, 160, 89, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Card com borda dourada (Personalização e CRM) */
+.dashboardCardDestaque {
+  border-color: rgba(197, 160, 89, 0.3);
+}
+
+.dashboardCardIcone {
+  font-size: 26px;
+  margin-bottom: 14px;
+}
+
+.dashboardCardTitulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 5px 0;
+}
+
+/* Título dourado para cards de destaque */
+.dashboardCardTituloDourado {
+  color: #c5a059;
+}
+
+.dashboardCardDescricao {
+  font-size: 12px;
+  color: #666666;
   margin: 0;
 }
 
-.dashboard-carregando {
+/* ── CARREGANDO ── */
+.dashboardCarregando {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  font-size: 18px;
-  color: #666;
+  font-size: 16px;
+  color: #666666;
+  background-color: #000000;
 }
 
+/* ── RESPONSIVO ── */
 @media (max-width: 768px) {
-  .dashboard-header {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
+  .dashboardHeader {
+    padding: 16px 20px;
   }
-  
-  .dashboard-main {
-    padding: 40px 20px;
+
+  .dashboardMain {
+    padding: 20px;
   }
-  
-  .dashboard-boas-vindas {
-    font-size: 24px;
-  }
-  
-  .dashboard-grid {
+
+  .dashboardMetricas {
     grid-template-columns: 1fr;
   }
-  
-  .dashboard-card {
-    padding: 40px 30px;
-  }
-  
-  .dashboard-card-titulo {
-    font-size: 28px;
+
+  .dashboardGrid {
+    grid-template-columns: 1fr;
   }
 }
