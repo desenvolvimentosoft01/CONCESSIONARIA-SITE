@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const WHATSAPP_API_URL = process.env.WHATSAPP_API_URL || 'https://graph.instagram.com/v18.0';
-const WHATSAPP_PHONE_ID = process.env.WHATSAPP_PHONE_ID;
-const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
+// Evolution API Configuration
+const EVOLUTION_API_URL = process.env.EVOLUTION_API_URL;
+const EVOLUTION_API_KEY = process.env.EVOLUTION_API_KEY;
+const EVOLUTION_INSTANCE = process.env.EVOLUTION_INSTANCE || 'concessionaria';
 const WHATSAPP_NUMERO_DONO = process.env.WHATSAPP_NUMERO_DONO;
 
 interface DadosLead {
@@ -15,32 +16,30 @@ interface DadosLead {
 
 export async function enviarWhatsAppLead(dados: DadosLead): Promise<void> {
   try {
-    if (!WHATSAPP_PHONE_ID || !WHATSAPP_ACCESS_TOKEN || !WHATSAPP_NUMERO_DONO) {
-      console.warn('[WhatsApp] Credenciais não configuradas — notificação será ignorada');
+    if (!EVOLUTION_API_URL || !EVOLUTION_API_KEY || !WHATSAPP_NUMERO_DONO) {
+      console.warn('[WhatsApp Evolution] Credenciais não configuradas — notificação será ignorada');
       return;
     }
 
     const mensagem = gerarMensagemLead(dados);
 
     const response = await axios.post(
-      `${WHATSAPP_API_URL}/${WHATSAPP_PHONE_ID}/messages`,
+      `${EVOLUTION_API_URL}/message/sendText/${EVOLUTION_INSTANCE}`,
       {
-        messaging_product: 'whatsapp',
-        to: WHATSAPP_NUMERO_DONO,
-        type: 'text',
-        text: { body: mensagem },
+        number: WHATSAPP_NUMERO_DONO,
+        text: mensagem,
       },
       {
         headers: {
-          Authorization: `Bearer ${WHATSAPP_ACCESS_TOKEN}`,
+          apikey: EVOLUTION_API_KEY,
           'Content-Type': 'application/json',
         },
       }
     );
 
-    console.log('[WhatsApp] Notificação enviada com sucesso:', response.data?.messages?.[0]?.id);
+    console.log('[WhatsApp Evolution] Notificação enviada com sucesso:', response.data?.message);
   } catch (error) {
-    console.error('[WhatsApp] Erro ao enviar notificação:', error);
+    console.error('[WhatsApp Evolution] Erro ao enviar notificação:', error);
   }
 }
 
