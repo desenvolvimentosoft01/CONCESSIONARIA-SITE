@@ -209,25 +209,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!transporter) {
-      return NextResponse.json(
-        { sucesso: false, erro: 'Erro de configuração do servidor' },
-        { status: 500 }
-      );
-    }
-
     const dataHora = formatarDataHora(new Date());
     const ip = obterIp(request);
     const destinatario = process.env.CONTACT_RECIPIENT_EMAIL ?? 'desenvolvimentoSoft01@gmail.com';
 
-    await transporter.sendMail({
-      from: `"${DADOS_LOJA.nome}" <${process.env.EMAIL_USER}>`,
-      to: destinatario,
-      replyTo: email,
-      subject: `💰 Solicitação de Financiamento: ${nome}`,
-      html: buildTemplate({ nome, email, telefone, valorVeiculo, mensagem, dataHora, ip }),
-    });
+    // Email: tenta enviar mas não bloqueia se falhar
+    if (transporter) {
+      try {
+        await transporter.sendMail({
+          from: `"${DADOS_LOJA.nome}" <${process.env.EMAIL_USER}>`,
+          to: destinatario,
+          replyTo: email,
+          subject: `💰 Solicitação de Financiamento: ${nome}`,
+          html: buildTemplate({ nome, email, telefone, valorVeiculo, mensagem, dataHora, ip }),
+        });
+        console.log('[FINANCIAMENTO API] Email enviado com sucesso para:', destinatario);
+      } catch (emailError: any) {
+        console.error('[FINANCIAMENTO API] Falha ao enviar email:', emailError?.message || emailError);
+      }
+    } else {
+      console.warn('[FINANCIAMENTO API] Transporter não configurado — email não enviado');
+    }
 
+    // Lead e WhatsApp sempre executam independente do email
     await criarLeadAutomatico({
       nome,
       email,
@@ -246,9 +250,9 @@ export async function POST(request: NextRequest) {
       origem: 'financiamento',
     });
 
-    return NextResponse.json({ sucesso: true, mensagem: 'Solicitação de financiamento enviada com sucesso!' });
-  } catch (error) {
-    console.error('❌ [FINANCIAMENTO API] Erro:', error);
+    return NextResponse.json({ sucesso: true, mensagem: 'Solicitação enviada com sucesso!' });
+  } catch (error: any) {
+    console.error('[FINANCIAMENTO API] Erro crítico:', error?.message || error);
     return NextResponse.json(
       { sucesso: false, erro: 'Erro ao enviar solicitação' },
       { status: 500 }
