@@ -15,6 +15,8 @@ export default function AdminLayout({
   const [nome, setNome] = useState('');
   const [iniciais, setIniciais] = useState('AD');
   const [carregando, setCarregando] = useState(true);
+  const [totalLeads, setTotalLeads] = useState<number | null>(null);
+  const [tarefasVencidas, setTarefasVencidas] = useState<number | null>(null);
 
   useEffect(() => {
     const logado = sessionStorage.getItem('admin_logado');
@@ -35,6 +37,14 @@ export default function AdminLayout({
     setIniciais(ini);
 
     setCarregando(false);
+
+    fetch('/api/leads/dashboard')
+      .then(r => r.json())
+      .then(data => {
+        setTotalLeads(data.totalLeads ?? 0);
+        setTarefasVencidas(data.tarefasVencidas ?? 0);
+      })
+      .catch(() => {});
   }, [router]);
 
   function handleLogout() {
@@ -125,7 +135,7 @@ export default function AdminLayout({
         <Link href="/admin/crm/leads" className={ativo('/admin/crm/leads')}>
           <span className="navItemIcone">👥</span>
           Leads
-          <span className="navBadgeDourado">12</span>
+          {totalLeads !== null && totalLeads > 0 && <span className="navBadgeDourado">{totalLeads}</span>}
         </Link>
         <Link href="/admin/crm/funil" className={ativo('/admin/crm/funil')}>
           <span className="navItemIcone">⬡</span>
@@ -134,7 +144,7 @@ export default function AdminLayout({
         <Link href="/admin/crm/tarefas" className={ativo('/admin/crm/tarefas')}>
           <span className="navItemIcone">☑</span>
           Tarefas
-          <span className="navBadge">3</span>
+          {tarefasVencidas !== null && tarefasVencidas > 0 && <span className="navBadge">{tarefasVencidas}</span>}
         </Link>
         <Link href="/admin/crm/relatorios" className={ativo('/admin/crm/relatorios')}>
           <span className="navItemIcone">📊</span>
