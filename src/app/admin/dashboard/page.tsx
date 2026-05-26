@@ -13,14 +13,24 @@ async function safeCount(sql: string): Promise<number> {
   }
 }
 
+function getValue(result: PromiseSettledResult<number>, fallback = 0): number {
+  return result.status === 'fulfilled' ? result.value : fallback;
+}
+
 export default async function DashboardPage() {
-  const [totalCarros, totalLeads, tarefasVencidas, vendidosMes, novosSemana] = await Promise.all([
+  const results = await Promise.allSettled([
     safeCount('SELECT COUNT(*) as total FROM TAB_CARRO WHERE disponivel = true'),
     safeCount('SELECT COUNT(*) as total FROM TAB_LEAD'),
     safeCount("SELECT COUNT(*) as total FROM TAB_LEAD_TAREFA WHERE status = 'pendente' AND prazo < CURRENT_DATE"),
     safeCount("SELECT COUNT(*) as total FROM TAB_CARRO WHERE disponivel = false AND data_criacao >= date_trunc('month', NOW())"),
     safeCount("SELECT COUNT(*) as total FROM TAB_LEAD WHERE criado_em >= NOW() - INTERVAL '7 days'"),
   ]);
+
+  const totalCarros    = getValue(results[0]);
+  const totalLeads     = getValue(results[1]);
+  const tarefasVencidas = getValue(results[2]);
+  const vendidosMes    = getValue(results[3]);
+  const novosSemana    = getValue(results[4]);
 
   return (
     <div style={{ padding: '24px' }}>
