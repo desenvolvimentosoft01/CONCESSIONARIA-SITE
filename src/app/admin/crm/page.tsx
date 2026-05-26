@@ -29,37 +29,35 @@ function formatarMoeda(valor: number | null): string {
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+async function safeQuery(sql: string): Promise<any[]> {
+  try {
+    return await query(sql);
+  } catch {
+    return [];
+  }
+}
+
 export default async function CrmDashboardPage() {
-  const [
-    totalRows,
-    porEtapa,
-    vencidas,
-    novos7d,
-    ganhos,
-    leadsRecentes,
-    tarefasHoje,
-    porOrigem,
-    leadsEsfriando,
-  ] = await Promise.all([
-    query('SELECT COUNT(*) AS total FROM TAB_LEAD'),
-    query(
+  const results = await Promise.allSettled([
+    safeQuery('SELECT COUNT(*) AS total FROM TAB_LEAD'),
+    safeQuery(
       `SELECT e.nome AS etapa, e.cor, COUNT(l.id) AS total
        FROM TAB_LEAD_ETAPA e
        LEFT JOIN TAB_LEAD l ON l.etapa_id = e.id
        GROUP BY e.id, e.nome, e.cor
        ORDER BY e.ordem`
     ),
-    query(`SELECT COUNT(*) AS total FROM TAB_LEAD_TAREFA WHERE status = 'pendente' AND prazo < CURRENT_DATE`),
-    query(`SELECT COUNT(*) AS total FROM TAB_LEAD WHERE criado_em >= NOW() - INTERVAL '7 days'`),
-    query(`SELECT COUNT(*) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Ganho'`),
-    query(
+    safeQuery(`SELECT COUNT(*) AS total FROM TAB_LEAD_TAREFA WHERE status = 'pendente' AND prazo < CURRENT_DATE`),
+    safeQuery(`SELECT COUNT(*) AS total FROM TAB_LEAD WHERE criado_em >= NOW() - INTERVAL '7 days'`),
+    safeQuery(`SELECT COUNT(*) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Ganho'`),
+    safeQuery(
       `SELECT l.id, l.nome, l.email, l.origem, l.criado_em,
               e.nome AS etapa_nome, e.cor AS etapa_cor
        FROM TAB_LEAD l
        LEFT JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id
        ORDER BY l.criado_em DESC LIMIT 5`
     ),
-    query(
+    safeQuery(
       `SELECT t.id, t.lead_id, t.descricao, t.prazo, t.status,
               l.nome AS lead_nome
        FROM TAB_LEAD_TAREFA t
@@ -69,8 +67,8 @@ export default async function CrmDashboardPage() {
        ORDER BY t.prazo ASC NULLS LAST
        LIMIT 8`
     ),
-    query(`SELECT origem, COUNT(*) AS total FROM TAB_LEAD GROUP BY origem ORDER BY total DESC`),
-    query(
+    safeQuery(`SELECT origem, COUNT(*) AS total FROM TAB_LEAD GROUP BY origem ORDER BY total DESC`),
+    safeQuery(
       `SELECT l.id, l.nome, e.nome AS etapa_nome, e.cor AS etapa_cor,
               MAX(i.criado_em) AS ultima_interacao
        FROM TAB_LEAD l
@@ -85,18 +83,22 @@ export default async function CrmDashboardPage() {
     ),
   ]);
 
+  const get = (r: PromiseSettledResult<any[]>) => r.status === 'fulfilled' ? r.value : [];
+
+  const [totalRows, porEtapa, vencidas, novos7d, ganhos,
+         leadsRecentes, tarefasHoje, porOrigem, leadsEsfriando] = results.map(get);
+
   const total = parseInt(totalRows[0]?.total ?? '0');
   const totalGanhos = parseInt(ganhos[0]?.total ?? '0');
   const taxa = total > 0 ? Math.round((totalGanhos / total) * 100) : 0;
-  const maxOrigem = Math.max(...porOrigem.map((r: any) => parseInt(r.total)), 1);
+  const maxOrigem = Math.max(...(porOrigem.length ? porOrigem.map((r: any) => parseInt(r.total)) : [0]), 1);
 
-  const ticketRows = await query(
+  const ticket = await safeQuery(
     `SELECT AVG(valor_estimado) AS ticket
      FROM TAB_LEAD l
      JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id
      WHERE e.nome IN ('Negociação', 'Ganho') AND l.valor_estimado IS NOT NULL`
-  );
-  const ticket = ticketRows[0]?.ticket ? parseFloat(ticketRows[0].ticket) : null;
+  ).then(rows => rows[0]?.ticket ? parseFloat(rows[0].ticket) : null);
 
   return (
     <div className="paginaCrm">
