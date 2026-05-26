@@ -1,13 +1,104 @@
-import { query } from '@/lib/db';
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import './crm-configuracoes.css';
 
-export const dynamic = 'force-dynamic';
+interface Etapa {
+  id: number;
+  nome: string;
+  cor: string;
+  ordem: number;
+}
 
-export default async function ConfiguracoesCrmPage() {
-  const etapas = await query(
-    'SELECT * FROM TAB_LEAD_ETAPA ORDER BY ordem'
-  );
+export default function ConfiguracoesCrmPage() {
+  const [etapas, setEtapas] = useState<Etapa[]>([]);
+  const [carregando, setCarregando] = useState(true);
+
+  const [editando, setEditando] = useState<Record<number, { nome: string; cor: string }>>({});
+  const [salvando, setSalvando] = useState<Record<number, boolean>>({});
+  const [erros, setErros] = useState<Record<number, string>>({});
+
+  const [novaAberta, setNovaAberta] = useState(false);
+  const [novaNome, setNovaNome] = useState('');
+  const [novaCor, setNovaCor] = useState('#5b9cf6');
+  const [criando, setCriando] = useState(false);
+  const [erroNova, setErroNova] = useState('');
+
+  useEffect(() => { carregarEtapas(); }, []);
+
+  async function carregarEtapas() {
+    try {
+      const res = await fetch('/api/leads/etapas');
+      const data = await res.json();
+      setEtapas(data);
+      const inicial: Record<number, { nome: string; cor: string }> = {};
+      data.forEach((e: Etapa) => { inicial[e.id] = { nome: e.nome, cor: e.cor }; });
+      setEditando(inicial);
+    } finally {
+      setCarregando(false);
+    }
+  }
+
+  function atualizar(id: number, campo: 'nome' | 'cor', valor: string) {
+    setEditando(prev => ({ ...prev, [id]: { ...prev[id], [campo]: valor } }));
+  }
+
+  async function salvar(id: number) {
+    setSalvando(prev => ({ ...prev, [id]: true }));
+    setErros(prev => ({ ...prev, [id]: '' }));
+    try {
+      const res = await fetch(`/api/leads/etapas/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editando[id]),
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        setErros(prev => ({ ...prev, [id]: d.erro || 'Erro ao salvar.' }));
+      } else {
+        await carregarEtapas();
+      }
+    } finally {
+      setSalvando(prev => ({ ...prev, [id]: false }));
+    }
+  }
+
+  async function excluir(id: number, nome: string) {
+    if (!confirm(`Excluir a etapa "${nome}"? Leads nessa etapa impedirão a exclusão.`)) return;
+    setErros(prev => ({ ...prev, [id]: '' }));
+    const res = await fetch(`/api/leads/etapas/${id}`, { method: 'DELETE' });
+    if (!res.ok) {
+      const d = await res.json();
+      setErros(prev => ({ ...prev, [id]: d.erro || 'Erro ao excluir.' }));
+    } else {
+      await carregarEtapas();
+    }
+  }
+
+  async function criarEtapa() {
+    if (!novaNome.trim()) { setErroNova('Nome obrigatório.'); return; }
+    setCriando(true);
+    setErroNova('');
+    try {
+      const res = await fetch('/api/leads/etapas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome: novaNome.trim(), cor: novaCor }),
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        setErroNova(d.erro || 'Erro ao criar etapa.');
+      } else {
+        setNovaAberta(false);
+        setNovaNome('');
+        setNovaCor('#5b9cf6');
+        await carregarEtapas();
+      }
+    } finally {
+      setCriando(false);
+    }
+  }
 
   return (
     <div className="paginaConfiguracoes">
@@ -28,21 +119,72 @@ export default async function ConfiguracoesCrmPage() {
       <div className="grade">
         {/* Etapas do Funil */}
         <div className="card">
-          <div className="cardTitulo">Etapas do Funil</div>
+          <div className="cabecalhoCard">
+            <div className="cardTitulo" style={{ marginBottom: 0 }}>Etapas do Funil</div>
+            <button
+              className="botaoNovaEtapa"
+              onClick={() => { setNovaAberta(p => !p); setErroNova(''); }}
+            >
+              {novaAberta ? '✕ Cancelar' : '+ Nova Etapa'}
+            </button>
+          </div>
+
+          {novaAberta && (
+            <div className="formularioNovaEtapa">
+              <input
+                className="inputEtapa"
+                placeholder="Nome da etapa"
+                value={novaNome}
+                onChange={e => setNovaNome(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && criarEtapa()}
+              />
+              <input
+                type="color"
+                className="inputCor"
+                value={novaCor}
+                onChange={e => setNovaCor(e.target.value)}
+              />
+              <button className="botaoSalvar" onClick={criarEtapa} disabled={criando}>
+                {criando ? '...' : 'Criar'}
+              </button>
+              {erroNova && <span className="erroEtapa">{erroNova}</span>}
+            </div>
+          )}
+
           <div className="listaEtapas">
-            {etapas.map((e: any) => (
+            {carregando ? (
+              <div style={{ color: '#444', fontSize: 13, padding: '12px 0' }}>Carregando...</div>
+            ) : etapas.map(e => (
               <div key={e.id} className="itemEtapa">
-                <span className="dragHandle">⠿</span>
-                <div className="pontoEtapa" style={{ backgroundColor: e.cor }} />
-                <span className="nomeEtapa">{e.nome}</span>
-                <span className="idEtapa">#{e.id}</span>
+                <div className="pontoCor" style={{ backgroundColor: editando[e.id]?.cor ?? e.cor }} />
+                <input
+                  className="inputEtapa"
+                  value={editando[e.id]?.nome ?? e.nome}
+                  onChange={ev => atualizar(e.id, 'nome', ev.target.value)}
+                />
+                <input
+                  type="color"
+                  className="inputCor"
+                  value={editando[e.id]?.cor ?? e.cor}
+                  onChange={ev => atualizar(e.id, 'cor', ev.target.value)}
+                />
+                <button
+                  className="botaoSalvar"
+                  onClick={() => salvar(e.id)}
+                  disabled={salvando[e.id]}
+                >
+                  {salvando[e.id] ? '...' : 'Salvar'}
+                </button>
+                <button className="botaoExcluir" onClick={() => excluir(e.id, e.nome)}>
+                  Excluir
+                </button>
+                {erros[e.id] && <span className="erroEtapa">{erros[e.id]}</span>}
               </div>
             ))}
           </div>
         </div>
 
         <div className="separadorColunaLateral">
-          {/* Tipos de Interação */}
           <div className="card">
             <div className="cardTitulo">Tipos de Interação</div>
             <div className="listaTipos">
@@ -54,7 +196,6 @@ export default async function ConfiguracoesCrmPage() {
             </div>
           </div>
 
-          {/* Captura Automática */}
           <div className="card">
             <div className="cardTitulo">Captura Automática</div>
             <div className="listaCaptura">

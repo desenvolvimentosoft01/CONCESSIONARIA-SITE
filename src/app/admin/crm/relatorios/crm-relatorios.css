@@ -39,7 +39,7 @@
 
 .gridMetricas {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -48,11 +48,11 @@
   background-color: #0d0d0d;
   border: 1px solid #1a1a1a;
   border-radius: 4px;
-  padding: 24px;
+  padding: 20px 18px;
 }
 
 .labelMetrica {
-  font-size: 11px;
+  font-size: 10px;
   color: #555;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -60,7 +60,10 @@
   margin-bottom: 10px;
 }
 
-.valorMetrica { font-size: 32px; font-weight: 900; color: #fff; }
+.valorMetrica { font-size: 28px; font-weight: 900; color: #fff; }
+.valorMetricaDourado { color: #c5a059; }
+.valorMetricaVerde { color: #28a745; }
+.valorMetricaVermelho { color: #dc3545; }
 
 .gridGraficos {
   display: grid;
@@ -84,45 +87,6 @@
   font-weight: 700;
   margin-bottom: 20px;
 }
-
-/* Gráfico barras (meses) */
-.graficoBarras {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  height: 120px;
-  border-bottom: 1px solid #1a1a1a;
-  padding-bottom: 8px;
-  margin-bottom: 8px;
-}
-
-.barraColuna {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
-  height: 100%;
-}
-
-.barraGrafico {
-  width: 100%;
-  border-radius: 2px 2px 0 0;
-  background-color: #1a1a1a;
-  min-height: 4px;
-  transition: height 0.3s ease;
-}
-
-.barraAtual { background-color: #c5a059 !important; }
-
-.valorBarra {
-  font-size: 11px;
-  font-weight: 700;
-  color: #777;
-}
-
-.labelMes { font-size: 10px; color: #444; }
 
 /* Funil conversão */
 .linhaFunil {
@@ -154,6 +118,13 @@
   padding: 24px;
 }
 
+.cabecalhoCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .tabela {
   width: 100%;
   border-collapse: collapse;
@@ -183,7 +154,15 @@
 
 .semDados { color: #444; font-size: 13px; text-align: center; padding: 20px 0; }
 
+@media (max-width: 1200px) {
+  .gridMetricas { grid-template-columns: repeat(3, 1fr); }
+}
+
 @media (max-width: 1024px) {
   .gridMetricas { grid-template-columns: repeat(2, 1fr); }
   .gridGraficos { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .gridMetricas { grid-template-columns: 1fr; }
 }

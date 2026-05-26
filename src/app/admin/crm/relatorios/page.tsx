@@ -1,5 +1,7 @@
 import { query } from '@/lib/db';
 import Link from 'next/link';
+import GraficoMeses from './GraficoMeses';
+import ExportarCSV from './ExportarCSV';
 import './crm-relatorios.css';
 
 export const dynamic = 'force-dynamic';
@@ -17,8 +19,6 @@ function formatarData(d: string): string {
 
 export default async function RelatoriosPage() {
   const agora = new Date();
-  const inicio30d = new Date(agora);
-  inicio30d.setDate(agora.getDate() - 30);
 
   const [
     leads30d,
@@ -28,6 +28,7 @@ export default async function RelatoriosPage() {
     porMes,
     porEtapa,
     leadsGanhos,
+    valorNegociacao,
   ] = await Promise.all([
     query(`SELECT COUNT(*) AS total FROM TAB_LEAD WHERE criado_em >= NOW() - INTERVAL '30 days'`),
     query(`SELECT COUNT(*) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Ganho' AND l.criado_em >= NOW() - INTERVAL '30 days'`),
@@ -36,12 +37,21 @@ export default async function RelatoriosPage() {
     query(`SELECT DATE_TRUNC('month', criado_em) AS mes, COUNT(*) AS total FROM TAB_LEAD GROUP BY mes ORDER BY mes DESC LIMIT 6`),
     query(`SELECT e.nome AS etapa, e.cor, COUNT(l.id) AS total FROM TAB_LEAD_ETAPA e LEFT JOIN TAB_LEAD l ON l.etapa_id = e.id GROUP BY e.id, e.nome, e.cor ORDER BY e.ordem`),
     query(`SELECT l.nome, c.modelo AS veiculo, l.valor_estimado, l.atualizado_em FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id LEFT JOIN TAB_CARRO c ON l.carro_id = c.id WHERE e.nome = 'Ganho' ORDER BY l.atualizado_em DESC LIMIT 10`),
+    query(`SELECT SUM(l.valor_estimado) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE LOWER(e.nome) NOT IN ('ganho', 'perdido') AND l.valor_estimado IS NOT NULL`),
   ]);
 
   const mesesOrdenados = [...porMes].reverse();
-  const maxMes = Math.max(...mesesOrdenados.map((r: any) => parseInt(r.total)), 1);
-
   const totalLeads = porEtapa.reduce((s: number, r: any) => s + parseInt(r.total), 0);
+  const valorEmNegociacao: number | null = valorNegociacao[0]?.total ? parseFloat(valorNegociacao[0].total) : null;
+
+  const dadosGrafico = mesesOrdenados.map((r: any) => {
+    const d = new Date(r.mes);
+    return {
+      label: MESES_PT[d.getMonth()],
+      total: parseInt(r.total),
+      atual: d.getMonth() === agora.getMonth() && d.getFullYear() === agora.getFullYear(),
+    };
+  });
 
   return (
     <div className="paginaRelatorios">
@@ -66,44 +76,28 @@ export default async function RelatoriosPage() {
         </div>
         <div className="cardMetrica">
           <div className="labelMetrica">Ganhos (30d)</div>
-          <div className="valorMetrica">{ganhos30d[0]?.total ?? 0}</div>
+          <div className="valorMetrica valorMetricaVerde">{ganhos30d[0]?.total ?? 0}</div>
         </div>
         <div className="cardMetrica">
           <div className="labelMetrica">Perdidos (30d)</div>
-          <div className="valorMetrica">{perdidos30d[0]?.total ?? 0}</div>
+          <div className="valorMetrica valorMetricaVermelho">{perdidos30d[0]?.total ?? 0}</div>
         </div>
         <div className="cardMetrica">
           <div className="labelMetrica">Tempo Médio</div>
           <div className="valorMetrica">{tempoMedio[0]?.dias ?? 0}d</div>
         </div>
+        <div className="cardMetrica">
+          <div className="labelMetrica">Valor em Negociação</div>
+          <div className="valorMetrica valorMetricaDourado">{formatarMoeda(valorEmNegociacao)}</div>
+        </div>
       </div>
 
       <div className="gridGraficos">
-        {/* Gráfico de Meses */}
         <div className="card">
           <div className="cardTitulo">Leads por mês (últimos 6)</div>
-          <div className="graficoBarras">
-            {mesesOrdenados.map((r: any, i: number) => {
-              const count = parseInt(r.total);
-              const pct = (count / maxMes) * 100;
-              const data = new Date(r.mes);
-              const mesLabel = MESES_PT[data.getMonth()];
-              const isMesAtual = data.getMonth() === agora.getMonth() && data.getFullYear() === agora.getFullYear();
-              return (
-                <div key={i} className="barraColuna">
-                  <div className="valorBarra">{count}</div>
-                  <div
-                    className={`barraGrafico ${isMesAtual ? 'barraAtual' : ''}`}
-                    style={{ height: `${Math.max(pct, 4)}%` }}
-                  />
-                  <div className="labelMes">{mesLabel}</div>
-                </div>
-              );
-            })}
-          </div>
+          <GraficoMeses dados={dadosGrafico} />
         </div>
 
-        {/* Funil de conversão */}
         <div className="card">
           <div className="cardTitulo">Conversão por etapa</div>
           {porEtapa.map((e: any) => {
@@ -122,9 +116,11 @@ export default async function RelatoriosPage() {
         </div>
       </div>
 
-      {/* Tabela Leads Ganhos */}
       <div className="cardTabela">
-        <div className="cardTitulo">Leads Ganhos</div>
+        <div className="cabecalhoCard">
+          <div className="cardTitulo" style={{ marginBottom: 0 }}>Leads Ganhos</div>
+          <ExportarCSV leads={leadsGanhos} />
+        </div>
         {leadsGanhos.length === 0 ? (
           <p className="semDados">Nenhum lead ganho ainda.</p>
         ) : (
