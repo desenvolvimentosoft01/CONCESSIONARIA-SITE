@@ -1,24 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { DeletarCarroButton } from './DeletarCarroButton';
 import './admin-carros.css';
 
-export default function AdminCarrosPage() {
+function AdminCarrosInner() {
   const searchParams = useSearchParams();
   const [carros, setCarros] = useState<any[]>([]);
   const [carrosFiltrados, setCarrosFiltrados] = useState<any[]>([]);
   const [carregando, setCarregando] = useState(true);
-  
+
   const [marcaSelecionada, setMarcaSelecionada] = useState('');
   const [anoSelecionado, setAnoSelecionado] = useState('');
   const [corSelecionada, setCorSelecionada] = useState('');
   const [statusSelecionado, setStatusSelecionado] = useState('');
   const [busca, setBusca] = useState('');
   const [buscaPlaca, setBuscaPlaca] = useState('');
-  
+
   const mensagemSucesso = searchParams?.get('sucesso');
   const mensagemErro = searchParams?.get('erro');
 
@@ -54,14 +54,14 @@ export default function AdminCarrosPage() {
     }
 
     if (busca) {
-      resultado = resultado.filter(carro => 
+      resultado = resultado.filter(carro =>
         carro.modelo.toLowerCase().includes(busca.toLowerCase()) ||
         carro.marca.toLowerCase().includes(busca.toLowerCase())
       );
     }
 
     if (buscaPlaca) {
-      resultado = resultado.filter(carro => 
+      resultado = resultado.filter(carro =>
         carro.placa && carro.placa.toLowerCase().includes(buscaPlaca.toLowerCase())
       );
     }
@@ -93,7 +93,7 @@ export default function AdminCarrosPage() {
           ✅ {mensagemSucesso}
         </div>
       )}
-      
+
       {mensagemErro && (
         <div className="admin-carros-mensagem-erro">
           ❌ {mensagemErro}
@@ -114,7 +114,7 @@ export default function AdminCarrosPage() {
 
       {/* FILTROS */}
       <div className="admin-carros-filtros">
-        <select 
+        <select
           className="admin-carros-select"
           value={marcaSelecionada}
           onChange={(e) => setMarcaSelecionada(e.target.value)}
@@ -122,8 +122,8 @@ export default function AdminCarrosPage() {
           <option value="">Todas as marcas</option>
           {marcas.map(marca => <option key={marca} value={marca}>{marca}</option>)}
         </select>
-        
-        <select 
+
+        <select
           className="admin-carros-select"
           value={anoSelecionado}
           onChange={(e) => setAnoSelecionado(e.target.value)}
@@ -131,8 +131,8 @@ export default function AdminCarrosPage() {
           <option value="">Todos os anos</option>
           {anos.map(ano => <option key={ano} value={ano}>{ano}</option>)}
         </select>
-        
-        <select 
+
+        <select
           className="admin-carros-select"
           value={corSelecionada}
           onChange={(e) => setCorSelecionada(e.target.value)}
@@ -140,8 +140,8 @@ export default function AdminCarrosPage() {
           <option value="">Todas as cores</option>
           {cores.map(cor => <option key={cor} value={cor}>{cor}</option>)}
         </select>
-        
-        <select 
+
+        <select
           className="admin-carros-select"
           value={statusSelecionado}
           onChange={(e) => setStatusSelecionado(e.target.value)}
@@ -150,17 +150,17 @@ export default function AdminCarrosPage() {
           <option value="disponivel">Disponível</option>
           <option value="vendido">Vendido</option>
         </select>
-        
-        <input 
-          type="text" 
+
+        <input
+          type="text"
           placeholder="Buscar por marca ou modelo..."
           className="admin-carros-input"
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
         />
 
-        <input 
-          type="text" 
+        <input
+          type="text"
           placeholder="Buscar por placa..."
           className="admin-carros-input"
           value={buscaPlaca}
@@ -220,5 +220,13 @@ export default function AdminCarrosPage() {
         </table>
       </div>
     </div>
+  );
+}
+
+export default function AdminCarrosPage() {
+  return (
+    <Suspense fallback={null}>
+      <AdminCarrosInner />
+    </Suspense>
   );
 }
