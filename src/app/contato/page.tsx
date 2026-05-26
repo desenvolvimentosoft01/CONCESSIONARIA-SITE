@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { query } from '@/lib/db';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -75,7 +76,9 @@ export default async function ContatoPage() {
 
           <div className="formularioContato">
             <h2 className="formTitulo">Envie uma Mensagem</h2>
-            <ContatoForm />
+            <Suspense fallback={null}>
+              <ContatoForm />
+            </Suspense>
           </div>
         </div>
       </main>

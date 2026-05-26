@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FadeIn from '@/components/FadeIn';
@@ -199,7 +200,9 @@ export default async function FinanciamentoPage() {
               Preencha o formulário abaixo e nossa equipe entrará em contato em breve
             </p>
           </FadeIn>
-          <FinanciamentoForm />
+          <Suspense fallback={null}>
+            <FinanciamentoForm />
+          </Suspense>
         </div>
       </section>
 
