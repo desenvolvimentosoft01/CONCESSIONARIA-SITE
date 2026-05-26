@@ -24,7 +24,7 @@ export default function GraficoMeses({ dados }: { dados: Dado[] }) {
           labelStyle={{ color: '#888', marginBottom: 4 }}
           itemStyle={{ color: '#c5a059' }}
           cursor={{ fill: 'rgba(255,255,255,0.04)' }}
-          formatter={(value: number) => [value, 'Leads']}
+          formatter={(value) => [Number(value), 'Leads']}
         />
         <Bar dataKey="total" radius={[3, 3, 0, 0]}>
           {dados.map((entry, idx) => (
