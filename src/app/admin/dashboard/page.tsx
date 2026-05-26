@@ -1,7 +1,18 @@
 import Link from 'next/link';
 import type React from 'react';
+import { query } from '@/lib/db';
 
-export default function DashboardPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function DashboardPage() {
+  const [totalCarros, totalLeads, tarefasVencidas, vendidosMes, novosSemana] = await Promise.all([
+    query('SELECT COUNT(*) as total FROM TAB_CARRO WHERE disponivel = true'),
+    query('SELECT COUNT(*) as total FROM TAB_LEAD'),
+    query("SELECT COUNT(*) as total FROM TAB_LEAD_TAREFA WHERE status = 'pendente' AND prazo < CURRENT_DATE"),
+    query("SELECT COUNT(*) as total FROM TAB_CARRO WHERE disponivel = false AND data_criacao >= date_trunc('month', NOW())"),
+    query("SELECT COUNT(*) as total FROM TAB_LEAD WHERE criado_em >= NOW() - INTERVAL '7 days'"),
+  ]);
+
   return (
     <div style={{ padding: '24px' }}>
 
@@ -9,17 +20,17 @@ export default function DashboardPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '14px', marginBottom: '28px' }}>
         <div style={{ background: '#0d0d0d', border: '1px solid #1a1a1a', borderRadius: '8px', padding: '20px 22px' }}>
           <div style={{ fontSize: '10px', letterSpacing: '1px', color: '#555', textTransform: 'uppercase', fontWeight: 600, marginBottom: '10px' }}>Veículos Cadastrados</div>
-          <div style={{ fontSize: '32px', fontWeight: 800, color: '#fff', lineHeight: 1, marginBottom: '6px' }}>24</div>
-          <div style={{ fontSize: '11px', color: '#555' }}>8 vendidos este mês</div>
+          <div style={{ fontSize: '32px', fontWeight: 800, color: '#fff', lineHeight: 1, marginBottom: '6px' }}>{totalCarros[0].total}</div>
+          <div style={{ fontSize: '11px', color: '#555' }}>{vendidosMes[0].total} vendidos este mês</div>
         </div>
         <div style={{ background: '#0d0d0d', border: '1px solid #1a1a1a', borderRadius: '8px', padding: '20px 22px' }}>
           <div style={{ fontSize: '10px', letterSpacing: '1px', color: '#555', textTransform: 'uppercase', fontWeight: 600, marginBottom: '10px' }}>Leads no CRM</div>
-          <div style={{ fontSize: '32px', fontWeight: 800, color: '#c5a059', lineHeight: 1, marginBottom: '6px' }}>12</div>
-          <div style={{ fontSize: '11px', color: '#555' }}>+3 esta semana</div>
+          <div style={{ fontSize: '32px', fontWeight: 800, color: '#c5a059', lineHeight: 1, marginBottom: '6px' }}>{totalLeads[0].total}</div>
+          <div style={{ fontSize: '11px', color: '#555' }}>+{novosSemana[0].total} esta semana</div>
         </div>
         <div style={{ background: '#0d0d0d', border: '1px solid #1a1a1a', borderRadius: '8px', padding: '20px 22px' }}>
           <div style={{ fontSize: '10px', letterSpacing: '1px', color: '#555', textTransform: 'uppercase', fontWeight: 600, marginBottom: '10px' }}>Tarefas Vencidas</div>
-          <div style={{ fontSize: '32px', fontWeight: 800, color: '#dc3545', lineHeight: 1, marginBottom: '6px' }}>3</div>
+          <div style={{ fontSize: '32px', fontWeight: 800, color: '#dc3545', lineHeight: 1, marginBottom: '6px' }}>{tarefasVencidas[0].total}</div>
           <div style={{ fontSize: '11px', color: '#555' }}>Requerem atenção</div>
         </div>
       </div>

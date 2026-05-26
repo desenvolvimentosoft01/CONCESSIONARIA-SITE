@@ -91,7 +91,37 @@ export async function PUT(
       dadosDepois: result[0],
     });
 
-    return NextResponse.json(result[0]);
+    // Ação automática ao mover de etapa
+    let carroMarcadoVendido = false;
+    if (etapa_id !== undefined && antes[0].etapa_id !== etapa_id) {
+      const etapas = await query('SELECT nome FROM TAB_LEAD_ETAPA WHERE id = $1', [etapa_id]);
+      const nomeEtapa: string = (etapas[0]?.nome ?? '').toLowerCase();
+      const carroId: number | null = result[0].carro_id;
+
+      if (nomeEtapa === 'ganho' && carroId) {
+        const carroAntes = await query('SELECT * FROM TAB_CARRO WHERE id = $1', [carroId]);
+        await query('UPDATE TAB_CARRO SET disponivel = false WHERE id = $1', [carroId]);
+        await registrarAuditoria({
+          usuario,
+          acao: 'UPDATE',
+          tabela: 'TAB_CARRO',
+          registroId: carroId,
+          dadosAntes: carroAntes[0],
+          dadosDepois: { ...carroAntes[0], disponivel: false },
+        });
+        carroMarcadoVendido = true;
+      }
+
+      if (nomeEtapa === 'perdido' && carroId) {
+        await query(
+          `INSERT INTO TAB_LEAD_INTERACAO (lead_id, tipo, texto, usuario)
+           VALUES ($1, 'observacao', 'Lead marcado como Perdido. Verifique manualmente a disponibilidade do veículo.', 'Sistema')`,
+          [id]
+        );
+      }
+    }
+
+    return NextResponse.json({ ...result[0], carro_marcado_vendido: carroMarcadoVendido });
   } catch (error) {
     console.error('[LEAD PUT]', error);
     return NextResponse.json({ erro: 'Erro ao atualizar lead' }, { status: 500 });

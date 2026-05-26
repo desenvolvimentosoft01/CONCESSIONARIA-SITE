@@ -2,6 +2,30 @@ import { query } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { registrarAuditoria, getClientInfo } from '@/lib/auditoria';
 
+export async function GET(
+  request: NextRequest,
+  context: { params: { id: string } | Promise<{ id: string }> }
+) {
+  const params = 'params' in context ? context.params : undefined;
+  const resolvedParams = params && 'then' in params ? await params : params;
+  const id = resolvedParams?.id;
+
+  if (!id) {
+    return NextResponse.json({ erro: 'ID não fornecido' }, { status: 400 });
+  }
+
+  try {
+    const rows = await query('SELECT * FROM TAB_CARRO WHERE id = $1', [id]);
+    if (rows.length === 0) {
+      return NextResponse.json({ erro: 'Carro não encontrado' }, { status: 404 });
+    }
+    return NextResponse.json(rows[0]);
+  } catch (error) {
+    console.error('[CARRO GET]', error);
+    return NextResponse.json({ erro: 'Erro ao buscar carro' }, { status: 500 });
+  }
+}
+
 export async function DELETE(
   request: NextRequest,
   context: { params: { id: string } | Promise<{ id: string }> }

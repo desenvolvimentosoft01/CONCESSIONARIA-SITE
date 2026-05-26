@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Toast from '@/components/Toast';
 
 interface FormData {
@@ -15,6 +16,8 @@ type FormErros = Partial<Record<keyof FormData, string>>;
 type Feedback = { status: 'idle' } | { status: 'sucesso'; mensagem: string } | { status: 'erro'; mensagem: string };
 
 export default function FinanciamentoForm() {
+  const searchParams = useSearchParams();
+  const carroId = searchParams.get('carro_id');
   const [form, setForm] = useState<FormData>({
     nome: '',
     email: '',
@@ -73,6 +76,7 @@ export default function FinanciamentoForm() {
           telefone: form.telefone.trim(),
           valorVeiculo: form.valorVeiculo.trim() || undefined,
           mensagem: form.mensagem.trim(),
+          ...(carroId ? { carro_id: carroId } : {}),
         }),
       });
 

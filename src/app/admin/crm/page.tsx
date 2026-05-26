@@ -16,6 +16,14 @@ function formatarData(data: string | Date): string {
   return new Date(data).toLocaleDateString('pt-BR');
 }
 
+function diasAtras(timestamp: string | null): string {
+  if (!timestamp) return 'Sem interações';
+  const dias = Math.floor((Date.now() - new Date(timestamp).getTime()) / 86400000);
+  if (dias === 0) return 'hoje';
+  if (dias === 1) return '1 dia atrás';
+  return `${dias} dias atrás`;
+}
+
 function formatarMoeda(valor: number | null): string {
   if (!valor) return '—';
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -31,6 +39,7 @@ export default async function CrmDashboardPage() {
     leadsRecentes,
     tarefasHoje,
     porOrigem,
+    leadsEsfriando,
   ] = await Promise.all([
     query('SELECT COUNT(*) AS total FROM TAB_LEAD'),
     query(
@@ -61,6 +70,19 @@ export default async function CrmDashboardPage() {
        LIMIT 8`
     ),
     query(`SELECT origem, COUNT(*) AS total FROM TAB_LEAD GROUP BY origem ORDER BY total DESC`),
+    query(
+      `SELECT l.id, l.nome, e.nome AS etapa_nome, e.cor AS etapa_cor,
+              MAX(i.criado_em) AS ultima_interacao
+       FROM TAB_LEAD l
+       LEFT JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id
+       LEFT JOIN TAB_LEAD_INTERACAO i ON i.lead_id = l.id
+       WHERE LOWER(e.nome) NOT IN ('ganho', 'perdido')
+       GROUP BY l.id, l.nome, e.nome, e.cor
+       HAVING MAX(i.criado_em) < NOW() - INTERVAL '3 days'
+          OR MAX(i.criado_em) IS NULL
+       ORDER BY ultima_interacao ASC NULLS FIRST
+       LIMIT 5`
+    ),
   ]);
 
   const total = parseInt(totalRows[0]?.total ?? '0');
@@ -195,6 +217,39 @@ export default async function CrmDashboardPage() {
               </div>
             )}
           </div>
+
+          {/* Leads Esfriando */}
+          {leadsEsfriando.length > 0 && (
+            <div className="card">
+              <div className="cardTitulo">Leads Esfriando</div>
+              <div className="listaEsfriando">
+                {leadsEsfriando.map((lead: any) => (
+                  <Link
+                    key={lead.id}
+                    href={`/admin/crm/leads/${lead.id}`}
+                    className="itemEsfriando"
+                  >
+                    <div className="nomeEsfriando">
+                      {lead.nome}
+                      <span
+                        className="badgeEtapa"
+                        style={{ backgroundColor: lead.etapa_cor ?? '#333' }}
+                      >
+                        {lead.etapa_nome}
+                      </span>
+                    </div>
+                    {lead.ultima_interacao ? (
+                      <span className="ultimaInteracao">
+                        Última interação: {diasAtras(lead.ultima_interacao)}
+                      </span>
+                    ) : (
+                      <span className="semInteracao">Sem interações</span>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="colunaLateral">

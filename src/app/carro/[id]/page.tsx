@@ -89,15 +89,23 @@ export default async function CarroDetalhesPage({
                   telefone="5518996692266"
                 />
                 
-                <button style={{ 
-                  padding: '20px', 
-                  backgroundColor: '#f5f5f5', 
-                  border: 'none', 
-                  borderRadius: '12px', 
-                  cursor: 'pointer' 
-                }}>
+                <Link
+                  href={`/contato?carro_id=${id}`}
+                  style={{
+                    padding: '20px',
+                    backgroundColor: '#f5f5f5',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '20px',
+                    textDecoration: 'none',
+                  }}
+                >
                   📩
-                </button>
+                </Link>
               </div>
               
               <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>

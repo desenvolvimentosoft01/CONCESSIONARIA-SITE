@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 interface FormData {
   nome: string;
@@ -63,6 +64,8 @@ function validar(dados: FormData): FormErros {
 }
 
 export default function ContatoForm() {
+  const searchParams = useSearchParams();
+  const carroId = searchParams.get('carro_id');
   const [form, setForm] = useState<FormData>(FORM_VAZIO);
   const [erros, setErros] = useState<FormErros>({});
   const [enviando, setEnviando] = useState(false);
@@ -94,7 +97,7 @@ export default function ContatoForm() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, ...(carroId ? { carro_id: carroId } : {}) }),
       });
 
       const data = await res.json();

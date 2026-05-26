@@ -17,12 +17,18 @@ No test runner or linter is configured in this project.
 Required in `.env.local`:
 
 ```
-DATABASE_URL=           # PostgreSQL connection string
-CLOUDINARY_CLOUD_NAME=  # Cloudinary cloud name
-CLOUDINARY_API_KEY=     # Cloudinary API key
-CLOUDINARY_API_SECRET=  # Cloudinary API secret
-EMAIL_USER=             # Gmail address for sending contact emails
-EMAIL_PASS=             # Gmail app password
+DATABASE_URL=                # PostgreSQL connection string
+CLOUDINARY_CLOUD_NAME=       # Cloudinary cloud name
+CLOUDINARY_API_KEY=          # Cloudinary API key
+CLOUDINARY_API_SECRET=       # Cloudinary API secret
+EMAIL_USER=                  # Gmail address for sending contact emails
+EMAIL_PASS=                  # Gmail app password
+CONTACT_RECIPIENT_EMAIL=     # Email address that receives contact form submissions
+EVOLUTION_API_URL=           # Evolution API base URL (e.g. https://chat.exemplo.com)
+EVOLUTION_API_KEY=           # Evolution API key
+EVOLUTION_INSTANCE=          # WhatsApp instance name in Evolution API
+WHATSAPP_NUMERO_DONO=        # Owner's WhatsApp number in E.164 format (e.g. 5518999999999)
+NEXT_PUBLIC_SITE_URL=        # Public URL of the deployed site
 ```
 
 ## Architecture Overview
@@ -33,12 +39,16 @@ This is a **Next.js 14 (App Router)** site for a car dealership ("Lucas Veículo
 
 PostgreSQL accessed via `src/lib/db.ts` using a connection pool (`pg`). All queries go through the exported `query()` helper. Table naming convention is `TAB_*`:
 
-- `TAB_CARRO` — vehicle records
+- `TAB_CARRO` — vehicle records (`disponivel` boolean controls visibility in public estoque)
 - `TAB_CARRO_IMAGEM` — vehicle images (supports multiple per car, ordered by `ordem`)
 - `TAB_MIDIA` — site media (images/videos per section, e.g. carousels)
 - `TAB_CONFIGURACAO` — key-value store for theme colors and site settings
 - `TAB_USUARIO` — admin users (plain-text password comparison — not hashed)
 - `TAB_AUDITORIA` — audit log of CREATE/UPDATE/DELETE actions
+- `TAB_LEAD` — CRM leads (nome, email, telefone, origem, etapa_id, carro_id FK, valor_estimado)
+- `TAB_LEAD_ETAPA` — pipeline stages (nome, cor, ordem) — e.g. Novo, Contactado, Negociação, Ganho, Perdido
+- `TAB_LEAD_INTERACAO` — timeline entries per lead (tipo, texto, usuario, criado_em)
+- `TAB_LEAD_TAREFA` — tasks per lead (descricao, tipo, prazo, status pendente/concluida)
 
 ### Authentication
 
@@ -77,17 +87,54 @@ All protected by the `sessionStorage` check in `src/app/admin/layout.tsx`.
 
 | Route | Purpose |
 |---|---|
-| `/admin/dashboard` | Main panel with links to sub-sections |
+| `/admin/dashboard` | Main panel — live metrics (carros, leads, tarefas vencidas) |
 | `/admin/carros` | List/delete vehicles |
 | `/admin/carros/novo` | Add new vehicle |
 | `/admin/carros/editar/[id]` | Edit existing vehicle |
 | `/admin/midia` | Manage site media per section |
 | `/admin/personalizacao` | Edit theme colors (saved to `TAB_CONFIGURACAO`) |
 | `/admin/auditoria` | View audit log |
+| `/admin/crm` | CRM dashboard — metrics, pipeline funnel, leads esfriando alert |
+| `/admin/crm/leads` | Lead list with filters |
+| `/admin/crm/leads/[id]` | Lead detail — etapa, tarefas, interações, veículo vinculado |
+| `/admin/crm/funil` | Kanban-style pipeline view |
+| `/admin/crm/tarefas` | All pending tasks across leads |
+| `/admin/crm/relatorios` | Reports |
+| `/admin/crm/configuracoes` | CRM settings (etapas, etc.) |
 
 ### API Routes (`/api/*`)
 
 All API routes are Next.js Route Handlers in `src/app/api/`. They return JSON and use the `query()` helper directly — no ORM.
+
+### CRM and Leads
+
+The CRM system captures leads from three entry points and manages them through a sales pipeline:
+
+**Lead capture (automatic):**
+- Public contact form (`/contato`) → `src/app/api/contact/route.ts` → `criarLeadAutomatico()` + `enviarWhatsAppLead()`
+- Financing form (`/financiamento`) → `src/app/api/financiamento-contato/route.ts` → same helpers
+- Vehicle interest button (`/carro/[id]`) → `src/app/api/carros/[id]/interesse/route.ts` → direct INSERT with `carro_id`
+
+Both forms read `?carro_id=X` from the URL (set when navigating from a vehicle page) and include it in the lead, so the CRM shows which vehicle the contact came from.
+
+**Key libraries:**
+- `src/lib/crm.ts` — exports `criarLeadAutomatico(dados: DadosLead)`. Inserts into `TAB_LEAD`, calls `registrarAuditoria()`. Accepts optional `carro_id`.
+- `src/lib/whatsapp.ts` — exports `enviarWhatsAppLead(dados)`. Sends a notification to the owner via Evolution API (`POST /message/sendText/{instance}`). Uses env vars `EVOLUTION_API_URL`, `EVOLUTION_API_KEY`, `EVOLUTION_INSTANCE`, `WHATSAPP_NUMERO_DONO`. Fails silently — never blocks the user flow.
+
+**API routes:**
+- `GET/POST /api/leads` — list all leads / create lead
+- `GET/PUT /api/leads/[id]` — get or update a lead (etapa, responsavel, carro_id, valor_estimado, etc.)
+- `GET/POST /api/leads/[id]/interacoes` — lead timeline entries
+- `GET/POST/PATCH /api/leads/[id]/tarefas` — lead tasks
+- `GET /api/leads/dashboard` — aggregated metrics (totals, por etapa, leadsEsfriando, etc.)
+- `POST /api/carros/[id]/interesse` — records a WhatsApp button click as a lead
+
+**Automation on stage change (PUT /api/leads/[id]):**
+- When `etapa_id` changes to the stage named **"Ganho"** and the lead has `carro_id`: automatically sets `TAB_CARRO.disponivel = false` and registers an audit entry. Returns `carro_marcado_vendido: true` in the response.
+- When changed to **"Perdido"** and lead has `carro_id`: inserts an automatic interaction warning to check vehicle availability manually. Does NOT revert `disponivel`.
+
+**Leads esfriando alert:**
+- The CRM dashboard shows leads without any interaction in the last 3 days (or with no interactions at all) that are not in Ganho/Perdido stages. Max 5 results, ordered by oldest interaction first.
 
 ### Styling
 

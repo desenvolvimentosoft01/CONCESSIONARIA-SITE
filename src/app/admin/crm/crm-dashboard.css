@@ -372,6 +372,52 @@
   padding: 20px 0;
 }
 
+.listaEsfriando {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itemEsfriando {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background-color: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+
+.itemEsfriando:hover {
+  border-color: rgba(220, 53, 69, 0.4);
+}
+
+.nomeEsfriando {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ddd;
+  flex-shrink: 0;
+}
+
+.ultimaInteracao {
+  font-size: 11px;
+  color: #555;
+  white-space: nowrap;
+}
+
+.semInteracao {
+  font-size: 11px;
+  color: #dc3545;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 @media (max-width: 1024px) {
   .gridMetricas {
     grid-template-columns: repeat(2, 1fr);

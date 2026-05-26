@@ -27,6 +27,10 @@ interface Etapa {
   cor: string;
 }
 
+interface CarroResumo {
+  disponivel: boolean;
+}
+
 interface Interacao {
   id: number;
   tipo: string;
@@ -68,6 +72,7 @@ export default function LeadDetalhePage() {
   const [etapas, setEtapas] = useState<Etapa[]>([]);
   const [interacoes, setInteracoes] = useState<Interacao[]>([]);
   const [tarefas, setTarefas] = useState<Tarefa[]>([]);
+  const [carro, setCarro] = useState<CarroResumo | null>(null);
   const [toast, setToast] = useState('');
   const [carregando, setCarregando] = useState(true);
 
@@ -101,14 +106,26 @@ export default function LeadDetalhePage() {
 
   useEffect(() => { carregar(); }, [carregar]);
 
+  useEffect(() => {
+    if (!lead?.carro_id) return;
+    fetch(`/api/carros/${lead.carro_id}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data) setCarro(data); })
+      .catch(() => {});
+  }, [lead?.carro_id]);
+
   async function mudarEtapa(etapa_id: string) {
-    await fetch(`/api/leads/${id}`, {
+    const res = await fetch(`/api/leads/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ etapa_id: parseInt(etapa_id) }),
     });
+    const data = await res.json();
     await carregar();
     mostrarToast('Etapa atualizada!');
+    if (data.carro_marcado_vendido) {
+      setTimeout(() => mostrarToast('Veículo marcado como vendido no estoque automaticamente'), 3200);
+    }
   }
 
   async function salvarValor() {
@@ -200,6 +217,50 @@ export default function LeadDetalhePage() {
               <span className="labelInfo">Mensagem original</span>
               <div className="mensagemOriginal">{lead.mensagem}</div>
             </div>
+          )}
+        </div>
+
+        {/* Veículo de Interesse */}
+        <div className="card">
+          <div className="cardTitulo">Veículo de Interesse</div>
+          {lead.carro_id ? (
+            <>
+              <div className="linhaInfo">
+                <span className="labelInfo">Veículo</span>
+                <span className="valorInfo">{lead.carro_modelo ?? '—'}</span>
+              </div>
+              <div className="linhaInfo">
+                <span className="labelInfo">Disponibilidade</span>
+                <span className="valorInfo">
+                  {carro === null
+                    ? <span style={{ color: '#555' }}>Carregando...</span>
+                    : carro.disponivel
+                      ? <span style={{ color: '#28a745' }}>● Disponível</span>
+                      : <span style={{ color: '#dc3545' }}>● Indisponível / Vendido</span>
+                  }
+                </span>
+              </div>
+              <div className="linhaInfo">
+                <span className="labelInfo">Links</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '4px' }}>
+                  <Link
+                    href={`/carro/${lead.carro_id}`}
+                    target="_blank"
+                    style={{ color: '#c5a059', fontSize: '13px', textDecoration: 'none' }}
+                  >
+                    Ver página pública ↗
+                  </Link>
+                  <Link
+                    href={`/admin/carros/editar/${lead.carro_id}`}
+                    style={{ color: '#666', fontSize: '13px', textDecoration: 'none' }}
+                  >
+                    Editar no admin →
+                  </Link>
+                </div>
+              </div>
+            </>
+          ) : (
+            <span className="semDados">Nenhum veículo vinculado.</span>
           )}
         </div>
 

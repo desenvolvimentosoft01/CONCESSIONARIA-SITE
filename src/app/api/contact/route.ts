@@ -193,7 +193,7 @@ function buildTemplate(params: {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { nome, email, telefone, assunto, mensagem } = body;
+    const { nome, email, telefone, assunto, mensagem, carro_id } = body;
 
     if (!nome || !email || !telefone || !assunto || !mensagem) {
       return NextResponse.json(
@@ -231,6 +231,7 @@ export async function POST(request: NextRequest) {
       telefone,
       mensagem: `Assunto: ${assunto}\n\n${mensagem}`,
       origem: 'contato',
+      carro_id: carro_id ? Number(carro_id) : undefined,
     });
 
     await enviarWhatsAppLead({

@@ -32,164 +32,99 @@
 
 ---
 
-## ✅ Fase 1: MVP Base (Site Público + Admin Carros)
+## ✅ Fase 1: MVP Base (Site Público + Admin Carros) — CONCLUÍDA
 
 **Objetivo**: Ter o site público funcional e gerenciamento básico de carros.  
-**Duração Estimada**: 2 semanas  
-**Critério de Conclusão**: Site ao vivo com estoque visível e admin conseguindo criar/editar carros.
+**Concluída em**: maio/2026
 
 ### 1.1 Páginas Públicas
 
 #### Home (`/`)
-- [ ] Banner/hero section com imagem destacada
-- [ ] Grid de carros destaque (últimos 6)
-- [ ] Seção de diferenciais (cards)
-- [ ] Call-to-action para estoque e contato
-- [ ] Footer com contato
-- **Dependências**: Componentes Header/Footer, TemaProvider funcional
-- **Estimativa**: 2 dias
+- [x] Banner/hero section com imagem destacada
+- [x] Grid de carros destaque (últimos 6)
+- [x] Seção de diferenciais (cards)
+- [x] Call-to-action para estoque e contato
+- [x] Footer com contato
 
 #### Estoque (`/estoque`)
-- [ ] Listar todos os carros (paginados, 12 por página)
-- [ ] Filtros: marca, modelo, faixa de preço, ano
-- [ ] Busca por texto (marca + modelo)
-- [ ] Card de carro: imagem, marca, modelo, ano, preço
-- [ ] Link para detalhe
-- **Dependências**: Cards de carro, filtros
-- **Estimativa**: 2 dias
+- [x] Listar todos os carros disponíveis
+- [x] Filtros: marca, modelo, faixa de preço, ano
+- [x] Busca por texto (marca + modelo)
+- [x] Card de carro: imagem, marca, modelo, ano, preço
+- [x] Link para detalhe
 
 #### Detalhe do Carro (`/carro/[id]`)
-- [ ] Galeria de imagens (carousel/lightbox)
-- [ ] Informações: marca, modelo, ano, descrição, preço
-- [ ] Botão "Entrar em Contato"
-- [ ] Carros relacionados (mesmo marca)
-- **Dependências**: Componente galeria, API de carros
-- **Estimativa**: 2 dias
+- [x] Galeria de imagens/vídeos (VehicleMediaViewer)
+- [x] Informações: marca, modelo, ano, km, combustível, cor, preço, descrição
+- [x] Botão WhatsApp com captura de lead (`BotaoWhatsApp`)
+- [x] Botão de contato → `/contato?carro_id=[id]`
 
-#### Empresa (`/empresa`)
-- [ ] Informações sobre Lucas Veículos (texto fixo ou config)
-- [ ] Galeria de fotos da empresa
-- [ ] Dados de contato (endereço, telefone, email)
-- [ ] Mapa (Google Maps ou iframe)
-- **Dependências**: TemaProvider, mídia do site
-- **Estimativa**: 1-2 dias
-
-#### Serviços (`/servicos`)
-- [ ] Cards de serviços (financiamento, troca, etc)
-- [ ] Descrição e benefícios de cada serviço
-- [ ] Links para páginas relacionadas
-- **Dependências**: Componentes simples
-- **Estimativa**: 1 dia
-
-#### Contato (`/contato`)
-- [ ] Formulário: nome, email, telefone, assunto, mensagem
-- [ ] Validação client + server
-- [ ] Enviar email via `/api/contato`
-- [ ] Feedback de sucesso/erro
-- **Dependências**: API de email (nodemailer)
-- **Estimativa**: 2 dias
+#### Empresa, Serviços, Financiamento, Contato
+- [x] Todas implementadas com conteúdo real
+- [x] Formulários de contato e financiamento com validação, e-mail e captura de lead
 
 #### Login (`/entrar`)
-- [ ] Formulário: email + senha
-- [ ] Validação contra `TAB_USUARIO`
-- [ ] Comparação plaintext (TODO: hash depois)
-- [ ] Redirect para `/admin/dashboard` em sucesso
-- [ ] Mensagens de erro
-- **Dependências**: API `/api/login`
-- **Estimativa**: 1 dia
+- [x] Formulário email + senha contra `TAB_USUARIO`
+- [x] Redirect para `/admin/dashboard` em sucesso
 
 ### 1.2 Admin de Carros
 
 #### Dashboard (`/admin/dashboard`)
-- [ ] Menu/sidebar com links para:
-  - Carros
-  - Mídia
-  - Personalizacao
-  - Auditoria
-  - Logout
-- [ ] Widget: total de carros
-- [ ] Widget: últimas 5 ações de auditoria
-- **Dependências**: Layout protegido
-- **Estimativa**: 1 dia
+- [x] Sidebar global de navegação
+- [x] Métricas dinâmicas: veículos disponíveis, leads no CRM, tarefas vencidas
 
 #### Listar Carros (`/admin/carros`)
-- [ ] Tabela com: foto, marca, modelo, ano, preço, ativo
-- [ ] Botões: editar, deletar, toggle ativo
-- [ ] Confirmação antes de deletar
-- [ ] Botão "Novo Carro"
-- [ ] Paginação
-- **Dependências**: API de carros
-- **Estimativa**: 2 dias
+- [x] Tabela com foto, marca, modelo, ano, preço
+- [x] Botões editar e deletar (com confirmação)
+- [x] Botão "Novo Carro"
 
 #### Novo Carro (`/admin/carros/novo`)
-- [ ] Formulário: marca, modelo, ano, preço, descricao, ativo
-- [ ] Upload múltiplo de imagens (Cloudinary)
-- [ ] Preview de imagens
-- [ ] Reordenação de imagens (drag-and-drop ou input)
-- [ ] Salvar em `TAB_CARRO` + `TAB_CARRO_IMAGEM`
-- [ ] Registrar auditoria
-- **Dependências**: Cloudinary SDK, componente upload
-- **Estimativa**: 3 dias
+- [x] Formulário completo com upload múltiplo de imagens (Cloudinary)
+- [x] Salva em `TAB_CARRO` + `TAB_CARRO_IMAGEM`
+- [x] Registra auditoria
 
 #### Editar Carro (`/admin/carros/editar/[id]`)
-- [ ] Formulário pré-preenchido
-- [ ] Editar dados do carro
-- [ ] Gerenciar imagens: adicionar, deletar, reordenar
-- [ ] Salvar mudanças
-- [ ] Registrar auditoria
-- **Dependências**: Mesmo que "Novo Carro"
-- **Estimativa**: 2 dias
+- [x] Formulário pré-preenchido
+- [x] Gerenciamento de imagens
+- [x] Registra auditoria
 
 ---
 
-## 🚀 Fase 2: Admin Completo + Públicas Secundárias
+## ✅ Fase 2: Admin Completo + CRM — CONCLUÍDA
 
 **Objetivo**: Completar admin e páginas públicas restantes.  
-**Duração Estimada**: 1-2 semanas  
-**Dependências**: Fase 1 completa
+**Concluída em**: maio/2026
 
 ### 2.1 Admin de Mídia
-
-#### Gerenciar Mídia (`/admin/midia`)
-- [ ] Abas por seção (carousel_home, about_galeria, etc)
-- [ ] Upload múltiplo (imagens + vídeos)
-- [ ] Listar mídia por seção
-- [ ] Reordenar
-- [ ] Deletar
-- [ ] Registrar auditoria
-- **Estimativa**: 2 dias
+- [x] `/admin/midia` — Upload múltiplo por seção, listar, deletar, auditoria
 
 ### 2.2 Admin de Tema
-
-#### Personalização (`/admin/personalizacao`)
-- [ ] Inputs de cor para: cor_primaria, cor_header, cor_footer
-- [ ] Preview em tempo real
-- [ ] Salvar em `TAB_CONFIGURACAO`
-- [ ] Registrar auditoria
-- **Estimativa**: 1 dia
+- [x] `/admin/personalizacao` — Inputs de cor, preview em tempo real, salva em `TAB_CONFIGURACAO`
 
 ### 2.3 Admin de Auditoria
+- [x] `/admin/auditoria` — Tabela com logs, filtros, JSON expandível
 
-#### Visualizar Auditoria (`/admin/auditoria`)
-- [ ] Tabela com logs: usuário, ação, tabela, timestamp
-- [ ] Filtros: usuário, ação, tabela, data range
-- [ ] JSON expandível de dados_antigos/dados_novos
-- [ ] Read-only
-- **Estimativa**: 1-2 dias
+### 2.4 CRM (adicionado além do escopo original)
+- [x] Pipeline de leads com etapas configuráveis
+- [x] Captura automática via formulários e botão WhatsApp
+- [x] Notificação WhatsApp ao dono via Evolution API
+- [x] Histórico de interações e tarefas por lead
+- [x] Dashboard CRM com funil, métricas e alerta de leads esfriando
+- [x] Ao mover para "Ganho": marca veículo como indisponível automaticamente
+- [x] Vinculação de lead a veículo (carro_id)
 
-### 2.4 APIs Necessárias
-
-- [x] `/api/login` — Autenticação
-- [x] `/api/logout` — Logout
-- [x] `/api/upload` — Upload para Cloudinary
-- [x] `/api/contato` — Envio de contato
-- [x] `/api/financiamento-contato` — Envio de financiamento
-- [ ] `/api/carros` — CRUD de carros
-- [ ] `/api/carros/[id]` — Get/Update/Delete
-- [ ] `/api/carro-imagem` — CRUD de imagens
-- [ ] `/api/midia` — CRUD de mídia
-- [ ] `/api/configuracao` — Get/Update de config
-- [ ] `/api/auditoria` — List com filtros
+### 2.5 APIs implementadas
+- [x] `/api/login` e `/api/logout`
+- [x] `/api/upload` — Cloudinary
+- [x] `/api/contact` e `/api/financiamento-contato`
+- [x] `/api/carros` — CRUD completo
+- [x] `/api/carros/[id]` — GET / DELETE
+- [x] `/api/carros/[id]/interesse` — captura de lead via WhatsApp
+- [x] `/api/midia` — CRUD de mídia por seção
+- [x] `/api/configuracao` — GET / UPDATE de config
+- [x] `/api/auditoria` — listagem com filtros
+- [x] `/api/leads` — CRUD de leads
+- [x] `/api/leads/[id]` e sub-rotas (interacoes, tarefas, dashboard)
 
 ---
 
@@ -287,24 +222,17 @@
 
 ---
 
-## 📌 Tarefas Atuais (Próximas Ações)
+## 📌 Próximas Prioridades (mai/2026)
 
-### Esta Semana (19-26 maio)
-- [ ] Completar home page (`/`)
-- [ ] Completar estoque (`/estoque`)
-- [ ] Completar detalhe de carro (`/carro/[id]`)
-- [ ] Completar login (`/entrar`)
-- [ ] API `/api/carros` (GET all, GET by id)
-- [ ] Admin listagem de carros
-- [ ] Refinar componentes Header/Footer
+### Fase 3 — Segurança (pendente)
+- [ ] Hash de senhas com bcryptjs (pacote instalado, não usado)
+- [ ] HttpOnly cookies para admin session
+- [ ] Rate limiting em `/api/login` e `/api/upload`
 
-### Próxima Semana (26 maio - 2 junho)
-- [ ] Admin novo carro (com upload Cloudinary)
-- [ ] Admin editar carro
-- [ ] Admin deletar carro
-- [ ] Completar páginas Empresa e Serviços
-- [ ] Completar página Contato + envio de email
-- [ ] Testes gerais
+### Fase 4 — Polimento
+- [ ] SEO: meta tags e Open Graph nas páginas públicas
+- [ ] Sitemap XML
+- [ ] CI/CD (GitHub Actions → Vercel)
 
 ---
 
