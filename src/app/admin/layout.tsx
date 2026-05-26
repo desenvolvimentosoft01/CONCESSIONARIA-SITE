@@ -59,10 +59,11 @@ export default function AdminLayout({
     if (pathname.startsWith('/admin/carros/editar')) return 'Editar Carro';
     if (pathname.startsWith('/admin/carros/novo')) return 'Novo Carro';
     if (pathname.startsWith('/admin/carros')) return 'Gerenciar Carros';
-    if (pathname.startsWith('/admin/midia')) return 'Gerenciar Mídia';
-    if (pathname.startsWith('/admin/personalizacao')) return 'Personalização';
-    if (pathname.startsWith('/admin/financiamento')) return 'Financiamento';
-    if (pathname.startsWith('/admin/auditoria')) return 'Auditoria';
+    if (pathname.startsWith('/admin/configuracoes/cores')) return 'Configurações — Cores';
+    if (pathname.startsWith('/admin/configuracoes/midia')) return 'Configurações — Mídia';
+    if (pathname.startsWith('/admin/configuracoes/textos')) return 'Configurações — Textos';
+    if (pathname.startsWith('/admin/configuracoes/auditoria')) return 'Configurações — Auditoria';
+    if (pathname.startsWith('/admin/configuracoes')) return 'Configurações';
     if (pathname.startsWith('/admin/crm/leads') && pathname.length > '/admin/crm/leads'.length) return 'Detalhe do Lead';
     if (pathname.startsWith('/admin/crm/leads')) return 'Leads';
     if (pathname.startsWith('/admin/crm/funil')) return 'Funil de Vendas';
@@ -110,21 +111,9 @@ export default function AdminLayout({
           <span className="navItemIcone">🚗</span>
           Carros
         </Link>
-        <Link href="/admin/midia" className={ativo('/admin/midia')}>
-          <span className="navItemIcone">📁</span>
-          Mídia
-        </Link>
-        <Link href="/admin/personalizacao" className={ativo('/admin/personalizacao')}>
-          <span className="navItemIcone">🎨</span>
-          Personalização
-        </Link>
-        <Link href="/admin/financiamento" className={ativo('/admin/financiamento')}>
-          <span className="navItemIcone">💰</span>
-          Financiamento
-        </Link>
-        <Link href="/admin/auditoria" className={ativo('/admin/auditoria')}>
-          <span className="navItemIcone">📋</span>
-          Auditoria
+        <Link href="/admin/configuracoes" className={ativo('/admin/configuracoes')}>
+          <span className="navItemIcone">⚙</span>
+          Configurações
         </Link>
 
         <div className="navSecao">CRM</div>

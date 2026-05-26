@@ -31,9 +31,10 @@ export default function ConfiguracoesCrmPage() {
     try {
       const res = await fetch('/api/leads/etapas');
       const data = await res.json();
-      setEtapas(data);
+      const lista: Etapa[] = Array.isArray(data) ? data : [];
+      setEtapas(lista);
       const inicial: Record<number, { nome: string; cor: string }> = {};
-      data.forEach((e: Etapa) => { inicial[e.id] = { nome: e.nome, cor: e.cor }; });
+      lista.forEach((e: Etapa) => { inicial[e.id] = { nome: e.nome, cor: e.cor }; });
       setEditando(inicial);
     } finally {
       setCarregando(false);

@@ -1,0 +1,35 @@
+.layoutConfiguracoes {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tabsConfiguracoes {
+  display: flex;
+  gap: 0;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #1a1a1a;
+  flex-shrink: 0;
+}
+
+.tabLink {
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  letter-spacing: 0.4px;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+
+.tabLink:hover {
+  color: #aaa;
+}
+
+.tabLinkAtivo {
+  color: #c5a059;
+  border-bottom-color: #c5a059;
+}

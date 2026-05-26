@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
-export default function PersonalizacaoRedirect() {
+
+export default function ConfiguracoesPage() {
   redirect('/admin/configuracoes/cores');
 }

@@ -8,6 +8,10 @@ export const dynamic = 'force-dynamic';
 
 const MESES_PT = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
+async function safeQuery(sql: string): Promise<any[]> {
+  try { return await query(sql); } catch { return []; }
+}
+
 function formatarMoeda(v: number | null): string {
   if (!v) return '—';
   return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -20,25 +24,19 @@ function formatarData(d: string): string {
 export default async function RelatoriosPage() {
   const agora = new Date();
 
-  const [
-    leads30d,
-    ganhos30d,
-    perdidos30d,
-    tempoMedio,
-    porMes,
-    porEtapa,
-    leadsGanhos,
-    valorNegociacao,
-  ] = await Promise.all([
-    query(`SELECT COUNT(*) AS total FROM TAB_LEAD WHERE criado_em >= NOW() - INTERVAL '30 days'`),
-    query(`SELECT COUNT(*) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Ganho' AND l.criado_em >= NOW() - INTERVAL '30 days'`),
-    query(`SELECT COUNT(*) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Perdido' AND l.criado_em >= NOW() - INTERVAL '30 days'`),
-    query(`SELECT AVG(EXTRACT(DAY FROM (atualizado_em - criado_em)))::int AS dias FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Ganho'`),
-    query(`SELECT DATE_TRUNC('month', criado_em) AS mes, COUNT(*) AS total FROM TAB_LEAD GROUP BY mes ORDER BY mes DESC LIMIT 6`),
-    query(`SELECT e.nome AS etapa, e.cor, COUNT(l.id) AS total FROM TAB_LEAD_ETAPA e LEFT JOIN TAB_LEAD l ON l.etapa_id = e.id GROUP BY e.id, e.nome, e.cor ORDER BY e.ordem`),
-    query(`SELECT l.nome, c.modelo AS veiculo, l.valor_estimado, l.atualizado_em FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id LEFT JOIN TAB_CARRO c ON l.carro_id = c.id WHERE e.nome = 'Ganho' ORDER BY l.atualizado_em DESC LIMIT 10`),
-    query(`SELECT SUM(l.valor_estimado) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE LOWER(e.nome) NOT IN ('ganho', 'perdido') AND l.valor_estimado IS NOT NULL`),
+  const results = await Promise.allSettled([
+    safeQuery(`SELECT COUNT(*) AS total FROM TAB_LEAD WHERE criado_em >= NOW() - INTERVAL '30 days'`),
+    safeQuery(`SELECT COUNT(*) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Ganho' AND l.criado_em >= NOW() - INTERVAL '30 days'`),
+    safeQuery(`SELECT COUNT(*) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Perdido' AND l.criado_em >= NOW() - INTERVAL '30 days'`),
+    safeQuery(`SELECT AVG(EXTRACT(DAY FROM (atualizado_em - criado_em)))::int AS dias FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE e.nome = 'Ganho'`),
+    safeQuery(`SELECT DATE_TRUNC('month', criado_em) AS mes, COUNT(*) AS total FROM TAB_LEAD GROUP BY mes ORDER BY mes DESC LIMIT 6`),
+    safeQuery(`SELECT e.nome AS etapa, e.cor, COUNT(l.id) AS total FROM TAB_LEAD_ETAPA e LEFT JOIN TAB_LEAD l ON l.etapa_id = e.id GROUP BY e.id, e.nome, e.cor ORDER BY e.ordem`),
+    safeQuery(`SELECT l.nome, c.modelo AS veiculo, l.valor_estimado, l.atualizado_em FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id LEFT JOIN TAB_CARRO c ON l.carro_id = c.id WHERE e.nome = 'Ganho' ORDER BY l.atualizado_em DESC LIMIT 10`),
+    safeQuery(`SELECT SUM(l.valor_estimado) AS total FROM TAB_LEAD l JOIN TAB_LEAD_ETAPA e ON l.etapa_id = e.id WHERE LOWER(e.nome) NOT IN ('ganho', 'perdido') AND l.valor_estimado IS NOT NULL`),
   ]);
+
+  const get = (r: PromiseSettledResult<any[]>) => r.status === 'fulfilled' ? r.value : [];
+  const [leads30d, ganhos30d, perdidos30d, tempoMedio, porMes, porEtapa, leadsGanhos, valorNegociacao] = results.map(get);
 
   const mesesOrdenados = [...porMes].reverse();
   const totalLeads = porEtapa.reduce((s: number, r: any) => s + parseInt(r.total), 0);
