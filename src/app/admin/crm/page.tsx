@@ -162,7 +162,7 @@ export default async function CrmDashboardPage() {
                 </thead>
                 <tbody>
                   {leadsRecentes.map((lead: any) => (
-                    <tr key={lead.id} onClick={() => {}}>
+                    <tr key={lead.id}>
                       <td>
                         <Link href={`/admin/crm/leads/${lead.id}`} style={{ textDecoration: 'none', display: 'block' }}>
                           <div className="nomeColuna">{lead.nome}</div>
