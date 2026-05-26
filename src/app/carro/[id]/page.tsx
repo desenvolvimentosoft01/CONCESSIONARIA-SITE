@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import VehicleMediaViewer from '@/components/VehicleMediaViewer';
 import FadeIn from '@/components/FadeIn';
 import Link from 'next/link';
+import BotaoWhatsApp from './BotaoWhatsApp';
 
 export default async function CarroDetalhesPage({
   params
@@ -80,24 +81,13 @@ export default async function CarroDetalhesPage({
               </div>
 
               <div style={{ display: 'flex', gap: '15px' }}>
-                <a 
-                  href={`https://wa.me/5518996692266?text=Tenho interesse no ${carro.modelo}`}
-                  target="_blank"
-                  style={{ 
-                    flex: 1,
-                    padding: '20px', 
-                    backgroundColor: '#25d366', 
-                    color: '#fff', 
-                    textAlign: 'center', 
-                    textDecoration: 'none', 
-                    borderRadius: '12px',
-                    fontWeight: '800',
-                    fontSize: '16px',
-                    boxShadow: '0 10px 20px rgba(37, 211, 102, 0.2)'
-                  }}
-                >
-                  NEGOCIAR VIA WHATSAPP
-                </a>
+                <BotaoWhatsApp
+                  carroId={carro.id}
+                  marca={carro.marca}
+                  modelo={carro.modelo}
+                  ano={carro.ano}
+                  telefone="5518996692266"
+                />
                 
                 <button style={{ 
                   padding: '20px', 
