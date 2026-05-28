@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import DemoBanner from '@/components/DemoBanner';
 import './admin-sidebar.css';
 
 export default function AdminLayout({
@@ -187,6 +188,7 @@ export default function AdminLayout({
         </div>
 
         <div className="adminConteudo">
+          <DemoBanner variant="admin" />
           {children}
         </div>
 

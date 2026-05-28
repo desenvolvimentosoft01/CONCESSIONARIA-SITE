@@ -1,6 +1,7 @@
 import './globals.css';
 import { Suspense } from 'react';
 import TemaProvider from '@/components/TemaProvider';
+import DemoBanner from '@/components/DemoBanner';
 import type { Metadata } from 'next';
 import { Inter, Montserrat, Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -33,6 +34,7 @@ export default function RootLayout({
         </Suspense>
 
         <WhatsAppButton />
+        <DemoBanner variant="public" />
       </body>
     </html>
   );
