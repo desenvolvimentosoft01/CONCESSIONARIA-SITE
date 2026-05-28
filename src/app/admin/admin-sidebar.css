@@ -22,6 +22,7 @@
   left: 0;
   z-index: 50;
   overflow-y: auto;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Logo */
@@ -193,7 +194,7 @@
   align-items: center;
 }
 
-/* Botão sair no topbar */
+/* Botão Sair */
 .btnSair {
   background: transparent;
   color: #dc3545;
@@ -209,6 +210,49 @@
 
 .btnSair:hover {
   background: rgba(220, 53, 69, 0.1);
+}
+
+/* ── HAMBURGER (oculto no desktop) ── */
+.btnHamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.btnHamburger:hover {
+  color: #fff;
+}
+
+.hamburguerIcone {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 20px;
+}
+
+.hamburguerIcone span {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+/* ── BACKDROP (oculto no desktop) ── */
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 45;
+  backdrop-filter: blur(2px);
 }
 
 /* Conteúdo das páginas */
@@ -228,4 +272,54 @@
 .adminConteudo::-webkit-scrollbar-thumb {
   background: #1e1e1e;
   border-radius: 2px;
+}
+
+/* ════════════════════════════════════════
+   MOBILE — sidebar como drawer
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.8);
+  }
+
+  .sidebarAberta .sidebar {
+    transform: translateX(0);
+  }
+
+  .sidebarAberta .backdrop {
+    display: block;
+  }
+
+  .adminMain {
+    margin-left: 0;
+  }
+
+  .btnHamburger {
+    display: flex;
+    align-items: center;
+  }
+
+  .adminTopbar {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .adminTopbarTitulo {
+    font-size: 15px;
+  }
+
+  .adminTopbarSub {
+    font-size: 10px;
+  }
+
+  .btnSair {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .adminConteudo > * {
+    padding: 16px !important;
+  }
 }

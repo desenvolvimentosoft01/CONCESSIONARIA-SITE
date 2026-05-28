@@ -33,3 +33,13 @@
   color: #c5a059;
   border-bottom-color: #c5a059;
 }
+
+@media (max-width: 768px) {
+  .tabsConfiguracoes {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+  }
+
+  .tabLink { padding: 10px 16px; font-size: 12px; }
+}

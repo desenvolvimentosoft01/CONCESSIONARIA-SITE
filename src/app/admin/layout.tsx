@@ -17,6 +17,9 @@ export default function AdminLayout({
   const [carregando, setCarregando] = useState(true);
   const [totalLeads, setTotalLeads] = useState<number | null>(null);
   const [tarefasVencidas, setTarefasVencidas] = useState<number | null>(null);
+  const [sidebarAberta, setSidebarAberta] = useState(false);
+
+  useEffect(() => { setSidebarAberta(false); }, [pathname]);
 
   useEffect(() => {
     const logado = sessionStorage.getItem('admin_logado');
@@ -90,7 +93,10 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="adminWrapper">
+    <div className={`adminWrapper${sidebarAberta ? ' sidebarAberta' : ''}`}>
+
+      {/* Backdrop mobile */}
+      <div className="backdrop" onClick={() => setSidebarAberta(false)} />
 
       {/* ══ SIDEBAR ══ */}
       <aside className="sidebar">
@@ -158,7 +164,18 @@ export default function AdminLayout({
       <div className="adminMain">
 
         <div className="adminTopbar">
-          <div>
+          <button
+            className="btnHamburger"
+            onClick={() => setSidebarAberta(p => !p)}
+            aria-label="Menu"
+          >
+            <span className="hamburguerIcone">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+          <div style={{ flex: 1 }}>
             <div className="adminTopbarTitulo">{tituloPagina()}</div>
             <div className="adminTopbarSub">
               {new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}

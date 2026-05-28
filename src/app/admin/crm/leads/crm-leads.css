@@ -339,3 +339,20 @@
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@media (max-width: 768px) {
+  .paginaLeads { padding: 20px 12px; }
+
+  .cabecalho { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+  .tituloPagina { font-size: 18px; }
+
+  .tabelaContainer { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  .tabela th,
+  .tabela td { padding: 10px 12px; }
+
+  .barraFiltros { gap: 8px; }
+
+  .botaoNovoLead { width: 100%; text-align: center; }
+}
