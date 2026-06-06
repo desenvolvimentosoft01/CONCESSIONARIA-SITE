@@ -10,7 +10,7 @@ export default async function EditarCarroPage({
   const { id } = await params;
   let carros: any[] = [];
   try {
-    carros = await query('SELECT * FROM "TAB_CARRO" WHERE id = $1', [id]);
+    carros = await query('SELECT * FROM TAB_CARRO WHERE id = $1', [id]);
   } catch (error) {
     console.error('Erro ao carregar carro para edição:', error);
     notFound();

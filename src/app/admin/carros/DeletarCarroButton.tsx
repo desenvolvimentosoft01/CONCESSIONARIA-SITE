@@ -25,8 +25,7 @@ export function DeletarCarroButton({ id }: DeletarCarroButtonProps) {
       if (response.ok) {
         setToast({ mensagem: 'Carro excluído com sucesso!', tipo: 'sucesso' });
         setTimeout(() => {
-          router.push('/admin/carros');
-          router.refresh();
+          window.location.href = '/admin/carros';
         }, 900);
       } else {
         setToast({ mensagem: 'Erro ao excluir carro', tipo: 'erro' });

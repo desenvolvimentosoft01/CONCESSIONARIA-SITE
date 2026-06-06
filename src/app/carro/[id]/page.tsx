@@ -16,8 +16,8 @@ export default async function CarroDetalhesPage({
   let imagens: any[] = [];
 
   try {
-    carroResult = await query('SELECT * FROM "TAB_CARRO" WHERE id = $1', [id]);
-    imagens = await query('SELECT * FROM "TAB_CARRO_IMAGEM" WHERE carro_id = $1 ORDER BY ordem', [id]);
+    carroResult = await query('SELECT * FROM TAB_CARRO WHERE id = $1', [id]);
+    imagens = await query('SELECT * FROM TAB_CARRO_IMAGEM WHERE carro_id = $1 ORDER BY ordem', [id]);
   } catch (error) {
     console.error('Erro ao carregar detalhes do carro:', error);
     return <div style={{ padding: '40px', textAlign: 'center' }}>Erro ao carregar veículo</div>;
