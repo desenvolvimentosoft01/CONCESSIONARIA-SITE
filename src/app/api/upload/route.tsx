@@ -82,10 +82,13 @@ export async function POST(request: Request) {
       imagem_url: uploadResult.secure_url
     });
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ [UPLOAD] Erro:', error);
+    const mensagem = error?.message || error?.http_code
+      ? `Cloudinary: ${error.message || error.http_code}`
+      : 'Erro ao fazer upload';
     return NextResponse.json(
-      { erro: 'Erro ao fazer upload' },
+      { erro: mensagem },
       { status: 500 }
     );
   }
