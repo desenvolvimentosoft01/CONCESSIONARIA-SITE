@@ -55,22 +55,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // Converte para buffer
+    // Converte para base64 data URI
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    
-    // Upload para o Cloudinary
-    const result = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        {
-          resource_type: isVideo ? 'video' : 'image',
-          folder: 'concessionaria',
-        },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      ).end(buffer);
+    const base64 = buffer.toString('base64');
+    const dataUri = `data:${file.type};base64,${base64}`;
+
+    // Upload para o Cloudinary via base64
+    const result = await cloudinary.uploader.upload(dataUri, {
+      resource_type: isVideo ? 'video' : 'image',
+      folder: 'concessionaria',
     });
 
     const uploadResult = result as any;
