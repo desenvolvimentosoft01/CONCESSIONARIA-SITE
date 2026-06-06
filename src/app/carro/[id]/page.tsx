@@ -26,8 +26,12 @@ export default async function CarroDetalhesPage({
   if (carroResult.length === 0) return <div style={{ padding: '40px', textAlign: 'center' }}>Veículo não encontrado</div>;
   const carro = carroResult[0];
 
-  // Simulação de mídias mistas (Imagens e Vídeos)
-  const midias = imagens.map((img: any) => ({
+  // Fallback: se não há imagens em TAB_CARRO_IMAGEM, usa imagem_url do carro
+  const imagensFinal = imagens.length > 0
+    ? imagens
+    : (carro.imagem_url ? [{ imagem_url: carro.imagem_url }] : []);
+
+  const midias = imagensFinal.map((img: any) => ({
     url: img.imagem_url,
     tipo: img.imagem_url.includes('mp4') ? 'video' : 'imagem'
   }));

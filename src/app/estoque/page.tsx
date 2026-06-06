@@ -11,9 +11,12 @@ export default async function EstoquePage({ searchParams }: any) {
 
   const sql = `
     SELECT c.*,
-           (SELECT imagem_url FROM TAB_CARRO_IMAGEM
-            WHERE carro_id = c.id
-            ORDER BY ordem LIMIT 1) as primeira_imagem
+           COALESCE(
+             (SELECT imagem_url FROM TAB_CARRO_IMAGEM
+              WHERE carro_id = c.id
+              ORDER BY ordem LIMIT 1),
+             c.imagem_url
+           ) as primeira_imagem
     FROM TAB_CARRO c
     WHERE c.disponivel = true
     ${marca ? 'AND c.marca ILIKE $1' : ''}

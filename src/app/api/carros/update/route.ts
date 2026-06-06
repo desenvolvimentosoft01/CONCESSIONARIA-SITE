@@ -30,7 +30,27 @@ export async function PUT(request: Request) {
     );
     
     const carro = result[0];
-    
+
+    // Sincroniza imagem principal com TAB_CARRO_IMAGEM (ordem 0)
+    if (data.imagem_url) {
+      const imagemExistente = await query(
+        'SELECT id FROM TAB_CARRO_IMAGEM WHERE carro_id = $1 AND ordem = 0',
+        [data.id]
+      );
+      if (imagemExistente.length > 0) {
+        await query(
+          'UPDATE TAB_CARRO_IMAGEM SET imagem_url = $1 WHERE carro_id = $2 AND ordem = 0',
+          [data.imagem_url, data.id]
+        );
+      } else {
+        await query(
+          `INSERT INTO TAB_CARRO_IMAGEM (carro_id, imagem_url, ordem, tipo)
+           VALUES ($1, $2, 0, 'imagem')`,
+          [data.id, data.imagem_url]
+        );
+      }
+    }
+
     // Registra auditoria
     const clientInfo = getClientInfo(request);
     await registrarAuditoria({
