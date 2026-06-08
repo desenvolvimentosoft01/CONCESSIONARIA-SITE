@@ -3,6 +3,11 @@ import { v2 as cloudinary } from 'cloudinary';
 
 export async function POST(request: Request) {
   console.log('🔵 [UPLOAD] Iniciando upload...');
+  console.log('🔵 [UPLOAD] Variáveis de ambiente:', {
+    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET ? '***definido***' : 'INDEFINIDO',
+  });
   
   // Configura Cloudinary diretamente aqui
   cloudinary.config({
@@ -77,7 +82,7 @@ export async function POST(request: Request) {
     });
     
   } catch (error: any) {
-    console.error('❌ [UPLOAD] Erro:', error);
+    console.error('❌ [UPLOAD] Erro completo:', error);
     const mensagem = error?.message || error?.http_code
       ? `Cloudinary: ${error.message || error.http_code}`
       : 'Erro ao fazer upload';
