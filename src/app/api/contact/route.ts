@@ -191,11 +191,16 @@ function buildTemplate(params: {
 }
 
 export async function POST(request: NextRequest) {
+  console.log('[CONTACT API] === INÍCIO DA REQUISIÇÃO ===');
+  
   try {
     const body = await request.json();
     const { nome, email, telefone, assunto, mensagem, carro_id } = body;
 
+    console.log('[CONTACT API] Dados recebidos:', { nome, email, telefone, assunto, temMensagem: !!mensagem });
+
     if (!nome || !email || !telefone || !assunto || !mensagem) {
+      console.log('[CONTACT API] Validação falhou - campos obrigatórios faltando');
       return NextResponse.json(
         { sucesso: false, erro: 'Todos os campos são obrigatórios' },
         { status: 400 }
@@ -208,30 +213,44 @@ export async function POST(request: NextRequest) {
 
     console.log('[CONTACT API] Configurações de email:', {
       hasTransporter: !!transporter,
-      emailUser: process.env.EMAIL_USER ? 'Configurado' : 'Não configurado',
+      emailUser: process.env.EMAIL_USER ? `${process.env.EMAIL_USER.substring(0, 3)}***` : 'Não configurado',
       emailPass: process.env.EMAIL_PASS ? 'Configurado' : 'Não configurado',
       destinatario,
     });
 
     // Email: tenta enviar mas não bloqueia se falhar
     if (transporter) {
+      console.log('[CONTACT API] Tentando enviar email...');
       try {
-        await transporter.sendMail({
+        const mailOptions = {
           from: `"${DADOS_LOJA.nome}" <${process.env.EMAIL_USER}>`,
           to: destinatario,
           replyTo: email,
           subject: `📬 Novo contato: ${assunto} — ${nome}`,
           html: buildTemplate({ nome, email, telefone, assunto, mensagem, dataHora, ip }),
+        };
+        
+        console.log('[CONTACT API] Opções de email:', {
+          from: mailOptions.from,
+          to: mailOptions.to,
+          subject: mailOptions.subject,
         });
-        console.log('[CONTACT API] Email enviado com sucesso para:', destinatario);
+        
+        const result = await transporter.sendMail(mailOptions);
+        console.log('[CONTACT API] ✅ Email enviado com sucesso!', { messageId: result.messageId, destinatario });
       } catch (emailError: any) {
-        console.error('[CONTACT API] Falha ao enviar email:', emailError?.message || emailError);
+        console.error('[CONTACT API] ❌ Falha ao enviar email:', {
+          message: emailError?.message,
+          code: emailError?.code,
+          command: emailError?.command,
+        });
       }
     } else {
-      console.warn('[CONTACT API] Transporter não configurado — email não enviado');
+      console.warn('[CONTACT API] ⚠️ Transporter não configurado — email não enviado');
     }
 
     // Lead e WhatsApp sempre executam independente do email
+    console.log('[CONTACT API] Criando lead no CRM...');
     await criarLeadAutomatico({
       nome,
       email,
@@ -240,7 +259,9 @@ export async function POST(request: NextRequest) {
       origem: 'contato',
       carro_id: carro_id ? Number(carro_id) : undefined,
     });
+    console.log('[CONTACT API] Lead criado com sucesso');
 
+    console.log('[CONTACT API] Enviando notificação WhatsApp...');
     await enviarWhatsAppLead({
       nomeCliente: nome,
       telefoneCliente: telefone,
@@ -249,10 +270,15 @@ export async function POST(request: NextRequest) {
       origem: 'contato',
       mensagemCliente: `Assunto: ${assunto}\n\n${mensagem}`,
     });
+    console.log('[CONTACT API] Notificação WhatsApp enviada');
 
+    console.log('[CONTACT API] === FIM DA REQUISIÇÃO (SUCESSO) ===');
     return NextResponse.json({ sucesso: true, mensagem: 'Mensagem enviada com sucesso!' });
   } catch (error: any) {
-    console.error('[CONTACT API] Erro crítico:', error?.message || error);
+    console.error('[CONTACT API] ❌ Erro crítico:', {
+      message: error?.message,
+      stack: error?.stack,
+    });
     return NextResponse.json(
       { sucesso: false, erro: 'Erro ao enviar mensagem' },
       { status: 500 }
