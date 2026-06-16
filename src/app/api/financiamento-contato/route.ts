@@ -249,6 +249,9 @@ export async function POST(request: NextRequest) {
       emailCliente: email,
       veiculoInteresse: undefined,
       origem: 'financiamento',
+      mensagemCliente: valorVeiculo
+        ? `Valor do veículo: ${valorVeiculo}\n\n${mensagem}`
+        : mensagem,
     });
 
     return NextResponse.json({ sucesso: true, mensagem: 'Solicitação enviada com sucesso!' });

@@ -12,6 +12,7 @@ interface DadosLead {
   emailCliente?: string;
   veiculoInteresse?: string;
   origem: 'detalhes_carro' | 'contato' | 'financiamento' | 'interesse';
+  mensagemCliente?: string;
 }
 
 export async function enviarWhatsAppLead(dados: DadosLead): Promise<void> {
@@ -58,8 +59,13 @@ function gerarMensagemLead(dados: DadosLead): string {
     mensagem += `*Veículo:* ${dados.veiculoInteresse}\n`;
   }
 
-  mensagem += `*Origem:* ${traduzOrigemLead(dados.origem)}\n\n`;
-  mensagem += `📱 *Acessar CRM:* ${linkCRM}\n`;
+  mensagem += `*Origem:* ${traduzOrigemLead(dados.origem)}\n`;
+
+  if (dados.mensagemCliente) {
+    mensagem += `\n💬 *Mensagem do Cliente:*\n_"${dados.mensagemCliente}"_\n`;
+  }
+
+  mensagem += `\n📱 *Acessar CRM:* ${linkCRM}\n`;
   mensagem += `\nAcesse rápido pelo celular para não perder o lead!`;
 
   return mensagem;
