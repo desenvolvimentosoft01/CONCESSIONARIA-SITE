@@ -206,13 +206,6 @@ export async function POST(request: NextRequest) {
     const ip = obterIp(request);
     const destinatario = process.env.CONTACT_RECIPIENT_EMAIL ?? 'desenvolvimentoSoft01@gmail.com';
 
-    console.log('[FINANCIAMENTO API] Configurações de email:', {
-      hasTransporter: !!transporter,
-      emailUser: process.env.EMAIL_USER ? 'Configurado' : 'Não configurado',
-      emailPass: process.env.EMAIL_PASS ? 'Configurado' : 'Não configurado',
-      destinatario,
-    });
-
     console.log('[CONTACT API] Configurações de email:', {
       hasTransporter: !!transporter,
       emailUser: process.env.EMAIL_USER ? 'Configurado' : 'Não configurado',
