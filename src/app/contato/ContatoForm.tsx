@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Toast from '@/components/Toast';
 
 interface FormData {
   nome: string;
@@ -117,17 +118,16 @@ export default function ContatoForm() {
   }
 
   return (
+    <>
+      {feedback.status !== 'idle' && (
+        <Toast
+          mensagem={feedback.mensagem}
+          tipo={feedback.status === 'sucesso' ? 'sucesso' : 'erro'}
+          onClose={() => setFeedback({ status: 'idle' })}
+        />
+      )}
+
     <form onSubmit={handleSubmit} noValidate aria-label="Formulário de contato">
-      {feedback.status === 'sucesso' && (
-        <div className="mensagemSucesso" role="alert">
-          ✅ {feedback.mensagem}
-        </div>
-      )}
-      {feedback.status === 'erro' && (
-        <div className="mensagemErro" role="alert">
-          ❌ {feedback.mensagem}
-        </div>
-      )}
 
       <div className="campo">
         <label className="label" htmlFor="nome">Nome Completo *</label>
@@ -230,5 +230,6 @@ export default function ContatoForm() {
         {enviando ? '⏳ Enviando...' : '📨 Enviar Mensagem'}
       </button>
     </form>
+    </>
   );
 }
