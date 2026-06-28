@@ -7,10 +7,26 @@ interface DemoStatus {
   diasRestantes: number;
   expirado: boolean;
   dataExpiracao: string | null;
+  cliente?: string;
+  invalido?: boolean;
 }
 
 const whatsapp = process.env.NEXT_PUBLIC_DEMO_AGENCIA_WHATSAPP ?? '';
 const email    = process.env.NEXT_PUBLIC_DEMO_AGENCIA_EMAIL    ?? '';
+
+const STORAGE_KEY = 'demo_token';
+
+function getToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  // Prioriza token da URL; se presente, salva no localStorage
+  const params = new URLSearchParams(window.location.search);
+  const urlToken = params.get('token');
+  if (urlToken) {
+    localStorage.setItem(STORAGE_KEY, urlToken);
+    return urlToken;
+  }
+  return localStorage.getItem(STORAGE_KEY);
+}
 
 function TelaExpirado() {
   const linkWhats = whatsapp
@@ -44,7 +60,7 @@ function TelaExpirado() {
       </h1>
 
       <p style={{ fontSize: 14, color: '#666', maxWidth: 400, lineHeight: 1.7, marginBottom: 36 }}>
-        O período de 7 dias de demonstração foi concluído.
+        O período de demonstração foi concluído.
         Gostou do que viu? Entre em contato para adquirir seu site.
       </p>
 
@@ -101,7 +117,11 @@ export default function DemoBanner({ variant = 'admin' }: { variant?: 'admin' | 
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_DEMO_MODE !== 'true') return;
-    fetch('/api/demo/status')
+
+    const token = getToken();
+    const url = token ? `/api/demo/status?token=${token}` : '/api/demo/status';
+
+    fetch(url)
       .then(r => r.json())
       .then(setStatus)
       .catch(() => {});
@@ -109,7 +129,7 @@ export default function DemoBanner({ variant = 'admin' }: { variant?: 'admin' | 
 
   if (!status?.demo) return null;
 
-  if (status.expirado) return <TelaExpirado />;
+  if (status.expirado || status.invalido) return <TelaExpirado />;
 
   const texto = `${status.diasRestantes} dia${status.diasRestantes !== 1 ? 's' : ''} restante${status.diasRestantes !== 1 ? 's' : ''}`;
 

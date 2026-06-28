@@ -1,4 +1,12 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"c:\\\\Projetos_Agencia_Juan\\\\Site para Concessionaria\\\\Concessionaria_Site\\\\src\\\\app\\\\api\\\\demo\\\\tokens\\\\[id]\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Projetos_Agencia_Juan\\Site para Concessionaria\\Concessionaria_Site\\src\\app\\api\\demo\\tokens"
+    ]
+  },
   "hooks": {
     "UserPromptSubmit": [
       {

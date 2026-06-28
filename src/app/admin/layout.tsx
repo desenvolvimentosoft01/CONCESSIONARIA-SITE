@@ -75,6 +75,7 @@ export default function AdminLayout({
     if (pathname.startsWith('/admin/crm/relatorios')) return 'Relatórios';
     if (pathname.startsWith('/admin/crm/configuracoes')) return 'Config. CRM';
     if (pathname.startsWith('/admin/crm')) return 'Dashboard CRM';
+    if (pathname.startsWith('/admin/demo')) return 'Gerenciar Demos';
     return 'Admin';
   }
 
@@ -150,6 +151,16 @@ export default function AdminLayout({
           <span className="navItemIcone">⚙</span>
           Config. CRM
         </Link>
+
+        {process.env.NEXT_PUBLIC_DEMO_MODE === 'true' && (
+          <>
+            <div className="navSecao">Demo</div>
+            <Link href="/admin/demo" className={ativo('/admin/demo')}>
+              <span className="navItemIcone">🔑</span>
+              Gerenciar Demos
+            </Link>
+          </>
+        )}
 
         <div className="sidebarRodape">
           <div className="sidebarAvatar">{iniciais}</div>
