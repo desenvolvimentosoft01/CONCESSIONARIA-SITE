@@ -10,7 +10,10 @@
       "Bash(git -C \"c:/WebProjetos/Concessionaria_Site\" status)",
       "Bash(git add *)",
       "Bash(git commit -m 'docs: atualizar documentacao Obsidian no CLAUDE.md *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(curl -s -m 5 http://localhost:3000/)"
     ]
   }
 }
